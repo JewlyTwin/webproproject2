@@ -36,7 +36,7 @@ public class RegisterServlet extends HttpServlet {
         String tel = request.getParameter("tel");
         String address = request.getParameter("address");
         String dob = request.getParameter("dob");
-        if()
+        
         
     }
 
