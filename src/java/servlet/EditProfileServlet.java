@@ -7,6 +7,9 @@ package servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.Resource;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.PersistenceUnit;
@@ -18,18 +21,18 @@ import javax.servlet.http.HttpSession;
 import javax.transaction.UserTransaction;
 import model.Customer;
 import model.controller.CustomerJpaController;
+import model.controller.exceptions.RollbackFailureException;
 
 /**
  *
  * @author Computer
  */
-public class LoginServlet extends HttpServlet {
+public class EditProfileServlet extends HttpServlet {
+@PersistenceUnit(unitName = "WonderFruitWebAppPU")
+    EntityManagerFactory emf;
 
     @Resource
     UserTransaction utx;
-    @PersistenceUnit(unitName = "WonderFruitWebAppPU")
-    EntityManagerFactory emf;
-
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -40,31 +43,37 @@ public class LoginServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        try {
+            throws ServletException, IOException, RollbackFailureException, Exception {
+        String username = request.getParameter("username");
+        String password = request.getParameter("pass");
+        String fname = request.getParameter("fname");
+        String lname = request.getParameter("lname");
+        String tel = request.getParameter("tel");
+        String address = request.getParameter("address");
+        String dob = request.getParameter("dob");
+        
+        
 
-            String username = request.getParameter("username");
-            String password = request.getParameter("pass");
-            
-            if (username != null && username.trim().length() > 0 && password != null && password.trim().length() > 0) {
-                CustomerJpaController cusCtrl = new CustomerJpaController(utx, emf);
-                Customer cus = cusCtrl.findCustomer(username);
-                String passFromDB = cus.getPassword();
-                if (passFromDB.equals(password)) {
-                    HttpSession session = request.getSession();
-                    session.setAttribute("cus", cus);
-                    getServletContext().getRequestDispatcher("/ProductLists").forward(request, response);
-                    return;
-                }
-            }
-        } catch (NullPointerException e) {
-            request.setAttribute("wrong", "Incorrected");
-            getServletContext().getRequestDispatcher("/Login.jsp").forward(request, response);
-        }
-
+        Customer newcus = new Customer();
+        newcus.setUsername(username);
+        newcus.setPassword(password);
+        newcus.setFname(fname);
+        newcus.setLname(lname);
+        newcus.setTelno(tel);
+        newcus.setAddress(address);
+        newcus.setDob(new Date());
+        
+        
+        CustomerJpaController cusCtrl = new CustomerJpaController(utx, emf);
+        cusCtrl.edit(newcus);
+        
+        HttpSession session = request.getSession();
+        Customer cus = (Customer)session.getAttribute("cus");
+        session.setAttribute("cus", newcus);
+        getServletContext().getRequestDispatcher("/Account").forward(request, response);
     }
 
-// <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *
@@ -76,7 +85,7 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        getServletContext().getRequestDispatcher("/Login.jsp").forward(request, response);
+       getServletContext().getRequestDispatcher("/EditProfile.jsp").forward(request, response);
     }
 
     /**
@@ -90,7 +99,11 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+    try {
         processRequest(request, response);
+    } catch (Exception ex) {
+        Logger.getLogger(EditProfileServlet.class.getName()).log(Level.SEVERE, null, ex);
+    }
     }
 
     /**

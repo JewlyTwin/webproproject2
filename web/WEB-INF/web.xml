@@ -9,6 +9,7 @@
         <servlet-class>servlet.RegisterServlet</servlet-class>
     </servlet>
     <servlet>
+<<<<<<< HEAD
         <servlet-name>listitemServlet</servlet-name>
         <servlet-class>servlet.listitemServlet</servlet-class>
     </servlet>
@@ -23,6 +24,26 @@
     <servlet>
         <servlet-name>AddItemToCartServlet</servlet-name>
         <servlet-class>servlet.AddItemToCartServlet</servlet-class>
+=======
+        <servlet-name>ProductListsServlet</servlet-name>
+        <servlet-class>servlet.ProductListsServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ForgetPassServlet</servlet-name>
+        <servlet-class>servlet.ForgetPassServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AccountServlet</servlet-name>
+        <servlet-class>servlet.AccountServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>LogoutServlet</servlet-name>
+        <servlet-class>servlet.LogoutServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EditProfileServlet</servlet-name>
+        <servlet-class>servlet.EditProfileServlet</servlet-class>
+>>>>>>> 96542f298df78ddd4924fc580e91be779e036034
     </servlet>
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
@@ -33,6 +54,7 @@
         <url-pattern>/Register</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
+<<<<<<< HEAD
         <servlet-name>listitemServlet</servlet-name>
         <url-pattern>/listitem</url-pattern>
     </servlet-mapping>
@@ -47,6 +69,26 @@
     <servlet-mapping>
         <servlet-name>AddItemToCartServlet</servlet-name>
         <url-pattern>/AddItemToCart</url-pattern>
+=======
+        <servlet-name>ProductListsServlet</servlet-name>
+        <url-pattern>/ProductLists</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ForgetPassServlet</servlet-name>
+        <url-pattern>/ForgetPass</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AccountServlet</servlet-name>
+        <url-pattern>/Account</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>LogoutServlet</servlet-name>
+        <url-pattern>/Logout</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EditProfileServlet</servlet-name>
+        <url-pattern>/EditProfile</url-pattern>
+>>>>>>> 96542f298df78ddd4924fc580e91be779e036034
     </servlet-mapping>
     <session-config>
         <session-timeout>
