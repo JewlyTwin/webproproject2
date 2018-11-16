@@ -14,13 +14,13 @@
     <body>
         <h1>Register ::</h1>
         <form action="Register" method="post">
-            Username <input type="text" name="username" required/><br>
-            Password <input type="text" name="pass" required/><br>
-            First name <input type="text" name="fname" required><br>
-            Last name <input type="text" name="lname" required><br>
-            Telephone number <input type="text" name="tel" required><br>
-            Address <input type="text" name="address" required><br>
-            Date of Birth <input type="date" name="dob"><br>
+            Username <input type="text" name="username" required/><br><br>
+            Password <input type="password" name="pass" required/><br><br>
+            First name <input type="text" name="fname" required><br><br>
+            Last name <input type="text" name="lname" required><br><br>
+            Telephone number <input type="text" name="tel" required><br><br>
+            Address <input type="text" name="address" required><br><br>
+            Date of Birth <input type="date" name="dob" placeholder="YYYY-MM-DD"><br><br>
             <input type="submit" value="Register">
         </form>
         <a href="Login">Login</a><br>

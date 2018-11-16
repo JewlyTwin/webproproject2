@@ -16,7 +16,7 @@
         
         <form action="Login" method="post">
             Username <input type="text" name="username" required/><br>
-            Password <input type="text" name="pass" required/><br>
+            Password <input type="password" name="pass" required/><br>
             <span style="color: red"/>${wrong} <br>
             <input type="submit" value="Login"/><br>
             

@@ -13,5 +13,6 @@
     </head>
     <body>
         <h1>Product List ::</h1>
+        <a href="Account">MyAccount</a>
     </body>
 </html>
