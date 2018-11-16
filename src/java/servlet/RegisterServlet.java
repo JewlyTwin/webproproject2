@@ -47,39 +47,38 @@ public class RegisterServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, RollbackFailureException, Exception {
         try {
-            
-        
-        String username = request.getParameter("username");
-        String password = request.getParameter("pass");
-        String fname = request.getParameter("fname");
-        String lname = request.getParameter("lname");
-        String tel = request.getParameter("tel");
-        String address = request.getParameter("address");
-        //String dob = request.getParameter("dob");
-        Date d = new SimpleDateFormat("yyyy-MM-dd").parse(request.getParameter("dob"));
-        if (username != null && username.trim().length() > 0
-                && password != null && password.trim().length() > 0
-                && fname != null && fname.trim().length() > 0
-                && lname != null && lname.trim().length() > 0
-                && tel != null && tel.trim().length() > 0
-                && address != null && address.trim().length() > 0) {
 
-            Customer cus = new Customer();
-            cus.setUsername(username);
-            cus.setPassword(password);
-            cus.setFname(fname);
-            cus.setLname(lname);
-            cus.setTelno(tel);
-            cus.setAddress(address);
-            cus.setDob(d);
+            String username = request.getParameter("username");
+            String password = request.getParameter("pass");
+            String fname = request.getParameter("fname");
+            String lname = request.getParameter("lname");
+            String tel = request.getParameter("tel");
+            String address = request.getParameter("address");
+            //String dob = request.getParameter("dob");
+            Date d = new SimpleDateFormat("yyyy-MM-dd").parse(request.getParameter("dob"));
+            if (username != null && username.trim().length() > 0
+                    && password != null && password.trim().length() > 0
+                    && fname != null && fname.trim().length() > 0
+                    && lname != null && lname.trim().length() > 0
+                    && tel != null && tel.trim().length() > 0
+                    && address != null && address.trim().length() > 0) {
+
+                Customer cus = new Customer();
+                cus.setUsername(username);
+                cus.setPassword(password);
+                cus.setFname(fname);
+                cus.setLname(lname);
+                cus.setTelno(tel);
+                cus.setAddress(address);
+                cus.setDob(d);
 
 //            Date d = new Date(0, 0, 0);
 //            cus.setDob(d);
-            CustomerJpaController cusCtrl = new CustomerJpaController(utx, emf);
-            cusCtrl.create(cus);
-            getServletContext().getRequestDispatcher("/Login").forward(request, response);
-            return;
-        }
+                CustomerJpaController cusCtrl = new CustomerJpaController(utx, emf);
+                cusCtrl.create(cus);
+                getServletContext().getRequestDispatcher("/Login").forward(request, response);
+                return;
+            }
         } catch (NullPointerException e) {
             getServletContext().getRequestDispatcher("/Register").forward(request, response);
         }

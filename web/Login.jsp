@@ -23,6 +23,6 @@
         </form>
             
             <a href="ForgetPass">Forget your password? </a><br>
-            <a href="Register">Register</a><br>
+            <a href="Register.jsp">Register</a><br>
     </body>
 </html>

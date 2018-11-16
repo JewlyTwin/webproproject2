@@ -37,9 +37,9 @@ public class SearchServlet extends HttpServlet {
      */
     @Resource
     UserTransaction utx;
-    @PersistenceUnit(unitName="WonderFruitWebAppPU")
+    @PersistenceUnit(unitName = "WonderFruitWebAppPU")
     EntityManagerFactory emf;
-    
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
@@ -49,7 +49,6 @@ public class SearchServlet extends HttpServlet {
         System.out.println(result);
         session.setAttribute("products", result);
         response.sendRedirect("ProductList.jsp");
-
 
     }
 

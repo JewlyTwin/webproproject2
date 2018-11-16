@@ -30,16 +30,14 @@ public class LogoutServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-       HttpSession session = request.getSession(false);
-        if(session != null){
-        session.invalidate();
+        HttpSession session = request.getSession(false);
+        if (session != null) {
+            session.invalidate();
         }
-       
-        getServletContext().getRequestDispatcher("/ProductLists").forward(request, response);
-         
-    }
 
-    
+        getServletContext().getRequestDispatcher("/ProductLists").forward(request, response);
+
+    }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
