@@ -17,7 +17,12 @@
         <form action="Login" method="post">
             Username <input type="text" name="username" required/><br>
             Password <input type="text" name="pass" required/><br>
-            <input type="submit" value="Login"/>
+            <span style="color: red"/>${wrong} <br>
+            <input type="submit" value="Login"/><br>
+            
         </form>
+            
+            <a href="ForgetPass">Forget your password? </a><br>
+            <a href="Register">Register</a><br>
     </body>
 </html>
