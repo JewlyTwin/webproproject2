@@ -29,6 +29,18 @@
                     <li class="nav-item">
                         <a class="nav-link" href="#">About us</a>
                     </li>
+                    <c:if test="${cart!=null}">
+                    <a href="CheckCart">Your Cart:(${cart.totalQuantity})</a>
+                </c:if>
+                &nbsp;&nbsp;&nbsp;
+                <c:choose>
+                    <c:when test="${sessionScope.user != null}">
+                        Hello <a href="Logout">${sessionScope.user.contactfirstname}</a>
+                    </c:when>
+                    <c:otherwise>
+                        Hello <a href="Login">Guest</a>
+                    </c:otherwise>
+                </c:choose>
                 </ul>
             </div>
         </nav>
