@@ -7,17 +7,28 @@ package servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import javax.annotation.Resource;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.PersistenceUnit;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import javax.transaction.UserTransaction;
+import model.Customer;
+import model.controller.CustomerJpaController;
 
 /**
  *
  * @author Computer
  */
 public class AccountServlet extends HttpServlet {
+@PersistenceUnit (unitName = "WonderFruitWebAppPU")
+EntityManagerFactory emf;
 
+@Resource
+UserTransaction utx;
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -29,6 +40,13 @@ public class AccountServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        Customer cus = (Customer)session.getAttribute("cus");
+        
+        CustomerJpaController cusCtrl = new CustomerJpaController(utx, emf);
+         Customer newcus = cusCtrl.findCustomer(cus.getUsername());
+         session.setAttribute("cus", newcus);
+        
         getServletContext().getRequestDispatcher("/Account.jsp").forward(request, response);
     }
 

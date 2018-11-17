@@ -54,15 +54,18 @@ public class RegisterServlet extends HttpServlet {
             String lname = request.getParameter("lname");
             String tel = request.getParameter("tel");
             String address = request.getParameter("address");
-            //String dob = request.getParameter("dob");
-            Date d = new SimpleDateFormat("yyyy-MM-dd").parse(request.getParameter("dob"));
+            String dobStr = request.getParameter("dob");
+            
+            SimpleDateFormat d = new SimpleDateFormat("yyyy-MM-dd");
+            Date dob = d.parse(dobStr);
             if (username != null && username.trim().length() > 0
                     && password != null && password.trim().length() > 0
                     && fname != null && fname.trim().length() > 0
                     && lname != null && lname.trim().length() > 0
                     && tel != null && tel.trim().length() > 0
                     && address != null && address.trim().length() > 0) {
-
+    //            String showdate = d.format(dob);
+                
                 Customer cus = new Customer();
                 cus.setUsername(username);
                 cus.setPassword(password);
@@ -70,7 +73,7 @@ public class RegisterServlet extends HttpServlet {
                 cus.setLname(lname);
                 cus.setTelno(tel);
                 cus.setAddress(address);
-                cus.setDob(d);
+                cus.setDob(dob);
 
 //            Date d = new Date(0, 0, 0);
 //            cus.setDob(d);

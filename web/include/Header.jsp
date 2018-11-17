@@ -14,7 +14,7 @@
     </head>
     <body>
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <a class="navbar-brand" href="#">Wonder fruit</a>
+            <a class="navbar-brand" href="listitem">Wonder fruit</a>
 <!--            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>-->
@@ -34,11 +34,13 @@
                 </c:if>
                 &nbsp;&nbsp;&nbsp;
                 <c:choose>
-                    <c:when test="${sessionScope.user != null}">
-                        Hello <a href="Logout">${sessionScope.user.contactfirstname}</a>
+                    <c:when test="${cus != null}">
+                        Hello, &nbsp; <a href="Account">${cus.username}</a> 
+                        &nbsp; &nbsp; &nbsp;<a href="Logout">Logout</a>
                     </c:when>
                     <c:otherwise>
-                        Hello <a href="Login">Guest</a>
+                        Hello, &nbsp; <a href="Login">Guest</a>
+                        &nbsp; &nbsp; &nbsp;<a href="Login">Login</a>
                     </c:otherwise>
                 </c:choose>
                 </ul>

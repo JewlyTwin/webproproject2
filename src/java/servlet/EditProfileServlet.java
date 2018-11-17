@@ -7,6 +7,7 @@ package servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -28,11 +29,13 @@ import model.controller.exceptions.RollbackFailureException;
  * @author Computer
  */
 public class EditProfileServlet extends HttpServlet {
-@PersistenceUnit(unitName = "WonderFruitWebAppPU")
+
+    @PersistenceUnit(unitName = "WonderFruitWebAppPU")
     EntityManagerFactory emf;
 
     @Resource
     UserTransaction utx;
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -44,33 +47,41 @@ public class EditProfileServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, RollbackFailureException, Exception {
-        String username = request.getParameter("username");
+        HttpSession session = request.getSession(false);
+        Customer cus = (Customer)session.getAttribute("cus");
+        
+        
+        
         String password = request.getParameter("pass");
         String fname = request.getParameter("fname");
         String lname = request.getParameter("lname");
         String tel = request.getParameter("tel");
         String address = request.getParameter("address");
-        String dob = request.getParameter("dob");
-        
-        
+        String dobStr = request.getParameter("dob");
+        SimpleDateFormat d = new SimpleDateFormat("yyyy-MM-dd");
+        Date dob = d.parse(dobStr);
 
-        Customer newcus = new Customer();
-        newcus.setUsername(username);
-        newcus.setPassword(password);
-        newcus.setFname(fname);
-        newcus.setLname(lname);
-        newcus.setTelno(tel);
-        newcus.setAddress(address);
-        newcus.setDob(new Date());
-        
-        
-        CustomerJpaController cusCtrl = new CustomerJpaController(utx, emf);
-        cusCtrl.edit(newcus);
-        
-        HttpSession session = request.getSession();
-        Customer cus = (Customer)session.getAttribute("cus");
-        session.setAttribute("cus", newcus);
-        getServletContext().getRequestDispatcher("/Account").forward(request, response);
+        if (password != null && password.trim().length() > 0
+                && fname != null && fname.trim().length() > 0
+                && lname != null && lname.trim().length() > 0
+                && tel != null && tel.trim().length() > 0
+                && address != null && address.trim().length() > 0) {
+            
+           
+            cus.setPassword(password);
+            cus.setFname(fname);
+            cus.setLname(lname);
+            cus.setTelno(tel);
+            cus.setAddress(address);
+            cus.setDob(dob);
+
+            CustomerJpaController cusCtrl = new CustomerJpaController(utx, emf);
+            cusCtrl.edit(cus);
+
+            session.setAttribute("cus", cus);
+            getServletContext().getRequestDispatcher("/Account.jsp").forward(request, response);
+            return;
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -85,7 +96,7 @@ public class EditProfileServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-       getServletContext().getRequestDispatcher("/EditProfile.jsp").forward(request, response);
+        getServletContext().getRequestDispatcher("/EditProfile.jsp").forward(request, response);
     }
 
     /**
@@ -99,11 +110,11 @@ public class EditProfileServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-    try {
-        processRequest(request, response);
-    } catch (Exception ex) {
-        Logger.getLogger(EditProfileServlet.class.getName()).log(Level.SEVERE, null, ex);
-    }
+        try {
+            processRequest(request, response);
+        } catch (Exception ex) {
+            Logger.getLogger(EditProfileServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**

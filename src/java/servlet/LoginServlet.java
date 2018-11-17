@@ -45,7 +45,7 @@ public class LoginServlet extends HttpServlet {
 
             String username = request.getParameter("username");
             String password = request.getParameter("pass");
-            
+
             if (username != null && username.trim().length() > 0 && password != null && password.trim().length() > 0) {
                 CustomerJpaController cusCtrl = new CustomerJpaController(utx, emf);
                 Customer cus = cusCtrl.findCustomer(username);
@@ -53,15 +53,18 @@ public class LoginServlet extends HttpServlet {
                 if (passFromDB.equals(password)) {
                     HttpSession session = request.getSession();
                     session.setAttribute("cus", cus);
-                    getServletContext().getRequestDispatcher("/ProductLists").forward(request, response);
+                    getServletContext().getRequestDispatcher("/ProductList.jsp").forward(request, response);
                     return;
                 }
             }
-        } catch (NullPointerException e) {
-            request.setAttribute("wrong", "Incorrected");
-            getServletContext().getRequestDispatcher("/Login.jsp").forward(request, response);
-        }
 
+        } catch (NullPointerException e) {
+            request.setAttribute("wrong", "Username or Password is Incorrected");
+            getServletContext().getRequestDispatcher("/Login.jsp").forward(request, response);
+            return;
+        }
+        
+        getServletContext().getRequestDispatcher("/Login.jsp").forward(request, response);
     }
 
 // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

@@ -1,22 +1,22 @@
 <%-- 
-    Document   : ForgetPassword
-    Created on : Nov 15, 2018, 11:11:39 PM
+    Document   : test
+    Created on : Nov 16, 2018, 1:58:14 PM
     Author     : Computer
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
+
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Forget Password</title>
+        <title>Login</title>
         <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
         <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
         <style>
 
             /* BASIC */
-   
 
             html {
                 background-color: #56baed;
@@ -110,7 +110,7 @@
                 transform: scale(0.95);
             }
 
-            input[type=text]{
+            input[type=text], input[type=password]{
                 background-color: #f6f6f6;
                 color: grey;
                 border: none;
@@ -131,50 +131,19 @@
                 border-radius: 5px 5px 5px 5px;
             }
 
-            input[type=text]:focus{
+            input[type=text]:focus , input[type=password]:focus {
                 background-color: #fff;
                 color: black;
                 border-bottom: 2px solid #5fbae9;
             }
+            input[type=text]:placeholder {
+                color: #cccccc;
+            }
+
 
             /* ANIMATIONS */
 
-             Simple CSS3 Fade-in-down Animation 
-            .fadeInDown {
-                -webkit-animation-name: fadeInDown;
-                animation-name: fadeInDown;
-                -webkit-animation-duration: 1s;
-                animation-duration: 1s;
-                -webkit-animation-fill-mode: both;
-                animation-fill-mode: both;
-            }
-
-            @-webkit-keyframes fadeInDown {
-                0% {
-                    opacity: 0;
-                    -webkit-transform: translate3d(0, -100%, 0);
-                    transform: translate3d(0, -100%, 0);
-                }
-                100% {
-                    opacity: 1;
-                    -webkit-transform: none;
-                    transform: none;
-                }
-            }
-
-            @keyframes fadeInDown {
-                0% {
-                    opacity: 0;
-                    -webkit-transform: translate3d(0, -100%, 0);
-                    transform: translate3d(0, -100%, 0);
-                }
-                100% {
-                    opacity: 1;
-                    -webkit-transform: none;
-                    transform: none;
-                }
-            }
-/* Simple CSS3 Fade-in-down Animation */
+            /* Simple CSS3 Fade-in-down Animation */
             .fadeInDown {
                 -webkit-animation-name: fadeInDown;
                 animation-name: fadeInDown;
@@ -265,16 +234,6 @@
                 content: "";
                 transition: width 0.2s;
             }
-            .underlineHover:after {
-                display: block;
-                left: 0;
-                bottom: -10px;
-                width: 0;
-                height: 2px;
-                background-color: #56baed;
-                content: "";
-                transition: width 0.2s;
-            }
 
             .underlineHover:hover {
                 color: #0d0d0d;
@@ -288,12 +247,6 @@
                 color:#60a0ff;
             }
 
-            h3{
-                color: #92badd;
-                font-size: 15px;
-            }
-
-
             /* OTHERS */
 
             *:focus {
@@ -306,10 +259,8 @@
 
         </style>
     </head>
-
-
     <body>
-       
+
         <div class="wrapper fadeInDown">
             <div id="formContent">
                 <!-- Tabs Titles -->
@@ -317,29 +268,24 @@
                 <!-- Icon -->
                 <div class="fadeIn first">
                     <img src="image/logo.jpg" id="icon" alt="User Icon" />
-                    <h1>Forgot Password?</h1>
-                    <h3>We will send your password.</h3>
+                    <h1>Login</h1>
                 </div>
 
                 <!-- Login Form -->
-                <form action="ForgetPass" method="post">
+                <form action="Login" method="post">
                     <input type="text" id="username" class="fadeIn second" name="username" placeholder="username">
+                    <input type="password" id="password" class="fadeIn third" name="pass" placeholder="password">
                     <span style="color: indianred"/>${wrong}<br>
-                    <input type="submit" class="fadeIn third" value="Send">
+                    <input type="submit" class="fadeIn fourth" value="Log In">
                 </form>
 
                 <!-- Forget Password & Register-->
                 <div id="formFooter">
-                    <a class="underlineHover" href="Login">Login</a> | <a class="underlineHover" href="Register">Register</a>
+                    <a class="underlineHover" href="ForgetPass">Forgot password?</a> | <a class="underlineHover" href="Register">Register</a>
                 </div>
 
             </div>
         </div>
-        <!--        <h1>Find your Password</h1>
-                Enter your username.
-                <button type="button" class="btn btn-success">Success</button>
-                <form action="ForgetPass" method="post">
-                    <input type="text" name="username" required/> <input type="submit" value="Send"/>
-                </form>-->
+
     </body>
 </html>

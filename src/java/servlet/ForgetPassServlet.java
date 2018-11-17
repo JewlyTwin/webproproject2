@@ -7,16 +7,28 @@ package servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import javax.annotation.Resource;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.PersistenceUnit;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.transaction.UserTransaction;
+import model.Customer;
+import model.controller.CustomerJpaController;
 
 /**
  *
  * @author Computer
  */
 public class ForgetPassServlet extends HttpServlet {
+
+    @PersistenceUnit(unitName = "WonderFruitWebAppPU")
+    EntityManagerFactory emf;
+
+    @Resource
+    UserTransaction utx;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -29,7 +41,24 @@ public class ForgetPassServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        getServletContext().getRequestDispatcher("/Login.jsp").forward(request, response);
+        try {
+
+            String username = request.getParameter("username");
+            if (username != null && username.trim().length() > 0) {
+                CustomerJpaController cusCtrl = new CustomerJpaController(utx, emf);
+                Customer cus = cusCtrl.findCustomer(username);
+                if (username.equals(cus.getUsername())) {
+                    getServletContext().getRequestDispatcher("/Login.jsp").forward(request, response);
+                    return;
+                }
+            }
+
+        } catch (NullPointerException e) {
+            request.setAttribute("wrong", "Username is Incorrected.");
+            getServletContext().getRequestDispatcher("/ForgetPassword.jsp").forward(request, response);
+            return;
+        }
+        getServletContext().getRequestDispatcher("/ForgetPassword.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

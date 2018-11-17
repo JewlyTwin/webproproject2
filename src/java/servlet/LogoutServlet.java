@@ -35,7 +35,7 @@ public class LogoutServlet extends HttpServlet {
             session.invalidate();
         }
 
-        getServletContext().getRequestDispatcher("/ProductLists").forward(request, response);
+        getServletContext().getRequestDispatcher("/listitem").forward(request, response);
 
     }
 
