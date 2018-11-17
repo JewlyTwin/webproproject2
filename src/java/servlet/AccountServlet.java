@@ -48,6 +48,7 @@ UserTransaction utx;
          session.setAttribute("cus", newcus);
         
         getServletContext().getRequestDispatcher("/Account.jsp").forward(request, response);
+        return;
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

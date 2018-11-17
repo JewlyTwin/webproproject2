@@ -51,7 +51,7 @@ public class EditProfileServlet extends HttpServlet {
         Customer cus = (Customer)session.getAttribute("cus");
         
         
-        
+        try{
         String password = request.getParameter("pass");
         String fname = request.getParameter("fname");
         String lname = request.getParameter("lname");
@@ -82,6 +82,12 @@ public class EditProfileServlet extends HttpServlet {
             getServletContext().getRequestDispatcher("/Account.jsp").forward(request, response);
             return;
         }
+       }catch (NullPointerException e) {
+            getServletContext().getRequestDispatcher("/EditProfile.jsp").forward(request, response);
+            return;
+        }
+        getServletContext().getRequestDispatcher("/EditProfile.jsp").forward(request, response);
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
