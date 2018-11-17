@@ -83,8 +83,11 @@ public class RegisterServlet extends HttpServlet {
                 return;
             }
         } catch (NullPointerException e) {
-            getServletContext().getRequestDispatcher("/Register").forward(request, response);
+            getServletContext().getRequestDispatcher("/Register.jsp").forward(request, response);
+            return;
         }
+        getServletContext().getRequestDispatcher("/Register.jsp").forward(request, response);
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

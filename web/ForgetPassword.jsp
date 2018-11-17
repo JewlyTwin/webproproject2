@@ -323,7 +323,7 @@
 
                 <!-- Login Form -->
                 <form action="ForgetPass" method="post">
-                    <input type="text" id="username" class="fadeIn second" name="username" placeholder="username">
+                    <input type="text" id="username" class="fadeIn second" name="username" placeholder="username" required>
                     <span style="color: indianred"/>${wrong}<br>
                     <input type="submit" class="fadeIn third" value="Send">
                 </form>

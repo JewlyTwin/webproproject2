@@ -273,8 +273,8 @@
 
                 <!-- Login Form -->
                 <form action="Login" method="post">
-                    <input type="text" id="username" class="fadeIn second" name="username" placeholder="username">
-                    <input type="password" id="password" class="fadeIn third" name="pass" placeholder="password">
+                    <input type="text" id="username" class="fadeIn second" name="username" placeholder="username" required>
+                    <input type="password" id="password" class="fadeIn third" name="pass" placeholder="password" required>
                     <span style="color: indianred"/>${wrong}<br>
                     <input type="submit" class="fadeIn fourth" value="Log In">
                 </form>
