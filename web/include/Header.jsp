@@ -32,7 +32,7 @@
                     <c:if test="${cart!=null}">
                     <a href="CheckCart">Your Cart:(${cart.totalQuantity})</a>
                 </c:if>
-                &nbsp;&nbsp;&nbsp;
+                <span style="padding-left: 35em;">
                 <c:choose>
                     <c:when test="${cus != null}">
                         Hello, &nbsp; <a href="Account">${cus.username}</a> 
@@ -41,8 +41,10 @@
                     <c:otherwise>
                         Hello, &nbsp; <a href="Login">Guest</a>
                         &nbsp; &nbsp; &nbsp;<a href="Login">Login</a>
+                        &nbsp; &nbsp; &nbsp;<a href="Register">Register</a>
                     </c:otherwise>
                 </c:choose>
+                </span>
                 </ul>
             </div>
         </nav>

@@ -17,27 +17,6 @@
         <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <style>
-         /* BASIC */
-
-            html {
-                background-color: #56baed;
-            }
-
-            body {
-                font-family: "Poppins", sans-serif;
-                height: 100vh;
-                text-align: center;
-            }
-
-            a {
-                color: #92badd;
-                display:inline-block;
-                text-decoration: none;
-                font-weight: 400;
-            }
-
-
-
             /* STRUCTURE */
 
             .wrapper {
@@ -314,6 +293,7 @@
         </div>
     <hr>
     <div id="formContent" class="fadeIn second">
+        <br>
     <b>Full Name</b>    ${cus.fname}  ${cus.lname}<br><br>
     <b>Tel No.</b>  ${cus.telno}<br><br>
     <b>Address</b>  ${cus.address}<br><br>

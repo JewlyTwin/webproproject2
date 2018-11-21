@@ -11,8 +11,17 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
-    <a href="ProductList.jsp"></a>
+         <a href="ProductList.jsp"></a>
         <style>
+             .bg{
+                background-image: url("image/Backgroud-img.jpg");
+                background-size: contain;
+            }
+            .search{
+                padding-left: 50em;
+                margin-top: 20px;
+                margin-bottom: 5px;
+            }
             .image {
                 background-repeat: no-repeat;
                 background-attachment: fixed;
@@ -44,9 +53,22 @@
                 height: 20em;
             }
             .bgcolor {
-                background-color: #F8B2A8;
+                background-color: white;
             }
-            
+            .card{
+               -webkit-border-radius: 10px 10px 10px 10px;
+                border-radius: 20px 20px 20px 20px;
+                background: #fff;
+                padding: 30px;
+                width: 90%;
+                max-width: 500px;
+                position: relative;
+                padding: 0px;
+                -webkit-box-shadow: 0 30px 60px 0 rgba(0,0,0,0.3);
+                box-shadow: 0 30px 60px 0 rgba(0,0,0,0.3);
+                text-align: left;
+            }
+
             
         </style>
     </head>
@@ -60,11 +82,16 @@
         </div>
 
         <%@include file="/include/Header.jsp"%>
+        <div class="bgcolor">
+                <form class="form-inline my-2 my-lg-0" style="text-align: right;" action="Search" method="post">
+                    <span class="search">
+                        <input class="form-control mr-sm-2" type="text" name="search" placeholder="Search">
+                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>            
+                    </span>
+                </form>
+
         <div class="container">
-            <form class="form-inline my-2 my-lg-0" action="Search" method="post">
-                <input class="form-control mr-sm-2" type="text" name="search" placeholder="Search">
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-            </form>
+            
             <div class="col-12 ">
                 <div class="row">
                     <c:forEach items="${products}" var="p" varStatus="i">
@@ -85,6 +112,7 @@
                         </div>
                     </c:forEach>
                 </div>
+            </div>  
             </div>
         </div>
     </body>

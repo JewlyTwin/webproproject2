@@ -16,29 +16,6 @@
         <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
         <style>
-            h1{
-                color:#60a0ff;
-            }
-            /* BASIC */
-
-            html {
-                background-color: #56baed;
-            }
-
-            body {
-                font-family: "Poppins", sans-serif;
-                height: 100vh;
-            }
-
-            a {
-                color: #92badd;
-                display:inline-block;
-                text-decoration: none;
-                font-weight: 400;
-            }
-
-
-
             /* STRUCTURE */
 
             .wrapper {
@@ -318,7 +295,6 @@
             <input type="text" name="lname" value="${cus.lname}"class="fadeIn second"placeholder="last name"required><br>
             <input type="text" name="tel" value="${cus.telno}"class="fadeIn second"placeholder="telephone number"required><br>
             <input type="text" name="address" value="${cus.address}" class="fadeIn second"placeholder="address"required><br>
-            <input type="date" name="dob" value="${cus.dob}" class="fadeIn second"placeholder="date of birth" required><br>
             <input type="submit" class="fadeIn third"value="Edit">
         </form>
             </div>
