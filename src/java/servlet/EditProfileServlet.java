@@ -73,7 +73,6 @@ public class EditProfileServlet extends HttpServlet {
             cus.setLname(lname);
             cus.setTelno(tel);
             cus.setAddress(address);
-            cus.setDob(dob);
 
             CustomerJpaController cusCtrl = new CustomerJpaController(utx, emf);
             cusCtrl.edit(cus);
