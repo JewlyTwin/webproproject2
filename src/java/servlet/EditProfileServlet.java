@@ -47,48 +47,51 @@ public class EditProfileServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, RollbackFailureException, Exception {
-    HttpSession session = request.getSession(false);
+  HttpSession session = request.getSession(false);
+
+        try {
+            
+            String password = request.getParameter("pass");
+            String fname = request.getParameter("fname");
+            String lname = request.getParameter("lname");
+            String tel = request.getParameter("tel");
+            String address = request.getParameter("address");
         
-        try{
-            
-        String password = request.getParameter("pass");
-        String fname = request.getParameter("fname");
-        String lname = request.getParameter("lname");
-        String tel = request.getParameter("tel");
-        String address = request.getParameter("address");
-        String dobStr = request.getParameter("dob");
-        SimpleDateFormat d = new SimpleDateFormat("yyyy-MM-dd");
-        Date dob = d.parse(dobStr);
 
-        if (password != null && password.trim().length() > 0
-                && fname != null && fname.trim().length() > 0
-                && lname != null && lname.trim().length() > 0
-                && tel != null && tel.trim().length() > 0
-                && address != null && address.trim().length() > 0) {
-            
-            Customer cus = (Customer)session.getAttribute("cus");
-            CustomerJpaController cusCtrl = new CustomerJpaController(utx, emf);
-            Customer newcus = cusCtrl.findCustomer(cus.getUsername());
-            
-            newcus.setPassword(password);
-            newcus.setFname(fname);
-            newcus.setLname(lname);
-            newcus.setTelno(tel);
-            newcus.setAddress(address);
-            newcus.setDob(dob);
-           
-            cusCtrl.edit(newcus);
+            if (password != null && password.trim().length() > 0
+                    && fname != null && fname.trim().length() > 0
+                    && lname != null && lname.trim().length() > 0
+                    && tel != null && tel.trim().length() > 0
+                    && address != null && address.trim().length() > 0) {
 
-            session.setAttribute("cus", newcus);
-            getServletContext().getRequestDispatcher("/Account.jsp").forward(request, response);
-            return;
-        }
-       }catch (NullPointerException e) {
+                Customer cus = (Customer) session.getAttribute("cus");
+                CustomerJpaController cusCtrl = new CustomerJpaController(utx, emf);
+                Customer newcus = cusCtrl.findCustomer(cus.getUsername());
+                
+                Date getdob = newcus.getDob();
+                SimpleDateFormat d = new SimpleDateFormat("yyyy-MM-dd");
+                String fdob= d.format(getdob);
+                Date dob = d.parse(fdob);
+                
+                newcus.setUsername(newcus.getUsername());
+                newcus.setPassword(password);
+                newcus.setFname(fname);
+                newcus.setLname(lname);
+                newcus.setTelno(tel);
+                newcus.setAddress(address);
+                newcus.setDob(dob);
+
+                cusCtrl.edit(newcus);
+
+                session.setAttribute("cus", newcus);
+                getServletContext().getRequestDispatcher("/Account").forward(request, response);
+                return;
+            }
+        } catch (NullPointerException e) {
             getServletContext().getRequestDispatcher("/EditProfile.jsp").forward(request, response);
             return;
         }
         getServletContext().getRequestDispatcher("/EditProfile.jsp").forward(request, response);
-
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

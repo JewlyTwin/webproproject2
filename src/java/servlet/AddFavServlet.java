@@ -22,7 +22,6 @@ import javax.transaction.UserTransaction;
 import model.Customer;
 import model.Favorite;
 import model.Product;
-import static model.Product_.favoriteList;
 import model.controller.CustomerJpaController;
 import model.controller.FavoriteJpaController;
 
