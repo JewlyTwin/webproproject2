@@ -15,8 +15,8 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import javax.transaction.UserTransaction;
 import model.Customer;
-import model.Orders;
-import model.Payment;
+import model.Favorite;
+import model.Product;
 import model.controller.exceptions.NonexistentEntityException;
 import model.controller.exceptions.RollbackFailureException;
 
@@ -24,9 +24,9 @@ import model.controller.exceptions.RollbackFailureException;
  *
  * @author earnnchp
  */
-public class PaymentJpaController implements Serializable {
+public class FavoriteJpaController implements Serializable {
 
-    public PaymentJpaController(UserTransaction utx, EntityManagerFactory emf) {
+    public FavoriteJpaController(UserTransaction utx, EntityManagerFactory emf) {
         this.utx = utx;
         this.emf = emf;
     }
@@ -37,29 +37,29 @@ public class PaymentJpaController implements Serializable {
         return emf.createEntityManager();
     }
 
-    public void create(Payment payment) throws RollbackFailureException, Exception {
+    public void create(Favorite favorite) throws RollbackFailureException, Exception {
         EntityManager em = null;
         try {
             utx.begin();
             em = getEntityManager();
-            Customer username = payment.getUsername();
+            Customer username = favorite.getUsername();
             if (username != null) {
                 username = em.getReference(username.getClass(), username.getUsername());
-                payment.setUsername(username);
+                favorite.setUsername(username);
             }
-            Orders orderid = payment.getOrderid();
-            if (orderid != null) {
-                orderid = em.getReference(orderid.getClass(), orderid.getOrderid());
-                payment.setOrderid(orderid);
+            Product productid = favorite.getProductid();
+            if (productid != null) {
+                productid = em.getReference(productid.getClass(), productid.getProductid());
+                favorite.setProductid(productid);
             }
-            em.persist(payment);
+            em.persist(favorite);
             if (username != null) {
-                username.getPaymentList().add(payment);
+                username.getFavoriteList().add(favorite);
                 username = em.merge(username);
             }
-            if (orderid != null) {
-                orderid.getPaymentList().add(payment);
-                orderid = em.merge(orderid);
+            if (productid != null) {
+                productid.getFavoriteList().add(favorite);
+                productid = em.merge(productid);
             }
             utx.commit();
         } catch (Exception ex) {
@@ -76,40 +76,40 @@ public class PaymentJpaController implements Serializable {
         }
     }
 
-    public void edit(Payment payment) throws NonexistentEntityException, RollbackFailureException, Exception {
+    public void edit(Favorite favorite) throws NonexistentEntityException, RollbackFailureException, Exception {
         EntityManager em = null;
         try {
             utx.begin();
             em = getEntityManager();
-            Payment persistentPayment = em.find(Payment.class, payment.getPaymentid());
-            Customer usernameOld = persistentPayment.getUsername();
-            Customer usernameNew = payment.getUsername();
-            Orders orderidOld = persistentPayment.getOrderid();
-            Orders orderidNew = payment.getOrderid();
+            Favorite persistentFavorite = em.find(Favorite.class, favorite.getFavid());
+            Customer usernameOld = persistentFavorite.getUsername();
+            Customer usernameNew = favorite.getUsername();
+            Product productidOld = persistentFavorite.getProductid();
+            Product productidNew = favorite.getProductid();
             if (usernameNew != null) {
                 usernameNew = em.getReference(usernameNew.getClass(), usernameNew.getUsername());
-                payment.setUsername(usernameNew);
+                favorite.setUsername(usernameNew);
             }
-            if (orderidNew != null) {
-                orderidNew = em.getReference(orderidNew.getClass(), orderidNew.getOrderid());
-                payment.setOrderid(orderidNew);
+            if (productidNew != null) {
+                productidNew = em.getReference(productidNew.getClass(), productidNew.getProductid());
+                favorite.setProductid(productidNew);
             }
-            payment = em.merge(payment);
+            favorite = em.merge(favorite);
             if (usernameOld != null && !usernameOld.equals(usernameNew)) {
-                usernameOld.getPaymentList().remove(payment);
+                usernameOld.getFavoriteList().remove(favorite);
                 usernameOld = em.merge(usernameOld);
             }
             if (usernameNew != null && !usernameNew.equals(usernameOld)) {
-                usernameNew.getPaymentList().add(payment);
+                usernameNew.getFavoriteList().add(favorite);
                 usernameNew = em.merge(usernameNew);
             }
-            if (orderidOld != null && !orderidOld.equals(orderidNew)) {
-                orderidOld.getPaymentList().remove(payment);
-                orderidOld = em.merge(orderidOld);
+            if (productidOld != null && !productidOld.equals(productidNew)) {
+                productidOld.getFavoriteList().remove(favorite);
+                productidOld = em.merge(productidOld);
             }
-            if (orderidNew != null && !orderidNew.equals(orderidOld)) {
-                orderidNew.getPaymentList().add(payment);
-                orderidNew = em.merge(orderidNew);
+            if (productidNew != null && !productidNew.equals(productidOld)) {
+                productidNew.getFavoriteList().add(favorite);
+                productidNew = em.merge(productidNew);
             }
             utx.commit();
         } catch (Exception ex) {
@@ -120,9 +120,9 @@ public class PaymentJpaController implements Serializable {
             }
             String msg = ex.getLocalizedMessage();
             if (msg == null || msg.length() == 0) {
-                Integer id = payment.getPaymentid();
-                if (findPayment(id) == null) {
-                    throw new NonexistentEntityException("The payment with id " + id + " no longer exists.");
+                Integer id = favorite.getFavid();
+                if (findFavorite(id) == null) {
+                    throw new NonexistentEntityException("The favorite with id " + id + " no longer exists.");
                 }
             }
             throw ex;
@@ -138,24 +138,24 @@ public class PaymentJpaController implements Serializable {
         try {
             utx.begin();
             em = getEntityManager();
-            Payment payment;
+            Favorite favorite;
             try {
-                payment = em.getReference(Payment.class, id);
-                payment.getPaymentid();
+                favorite = em.getReference(Favorite.class, id);
+                favorite.getFavid();
             } catch (EntityNotFoundException enfe) {
-                throw new NonexistentEntityException("The payment with id " + id + " no longer exists.", enfe);
+                throw new NonexistentEntityException("The favorite with id " + id + " no longer exists.", enfe);
             }
-            Customer username = payment.getUsername();
+            Customer username = favorite.getUsername();
             if (username != null) {
-                username.getPaymentList().remove(payment);
+                username.getFavoriteList().remove(favorite);
                 username = em.merge(username);
             }
-            Orders orderid = payment.getOrderid();
-            if (orderid != null) {
-                orderid.getPaymentList().remove(payment);
-                orderid = em.merge(orderid);
+            Product productid = favorite.getProductid();
+            if (productid != null) {
+                productid.getFavoriteList().remove(favorite);
+                productid = em.merge(productid);
             }
-            em.remove(payment);
+            em.remove(favorite);
             utx.commit();
         } catch (Exception ex) {
             try {
@@ -171,19 +171,19 @@ public class PaymentJpaController implements Serializable {
         }
     }
 
-    public List<Payment> findPaymentEntities() {
-        return findPaymentEntities(true, -1, -1);
+    public List<Favorite> findFavoriteEntities() {
+        return findFavoriteEntities(true, -1, -1);
     }
 
-    public List<Payment> findPaymentEntities(int maxResults, int firstResult) {
-        return findPaymentEntities(false, maxResults, firstResult);
+    public List<Favorite> findFavoriteEntities(int maxResults, int firstResult) {
+        return findFavoriteEntities(false, maxResults, firstResult);
     }
 
-    private List<Payment> findPaymentEntities(boolean all, int maxResults, int firstResult) {
+    private List<Favorite> findFavoriteEntities(boolean all, int maxResults, int firstResult) {
         EntityManager em = getEntityManager();
         try {
             CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
-            cq.select(cq.from(Payment.class));
+            cq.select(cq.from(Favorite.class));
             Query q = em.createQuery(cq);
             if (!all) {
                 q.setMaxResults(maxResults);
@@ -195,20 +195,20 @@ public class PaymentJpaController implements Serializable {
         }
     }
 
-    public Payment findPayment(Integer id) {
+    public Favorite findFavorite(Integer id) {
         EntityManager em = getEntityManager();
         try {
-            return em.find(Payment.class, id);
+            return em.find(Favorite.class, id);
         } finally {
             em.close();
         }
     }
 
-    public int getPaymentCount() {
+    public int getFavoriteCount() {
         EntityManager em = getEntityManager();
         try {
             CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
-            Root<Payment> rt = cq.from(Payment.class);
+            Root<Favorite> rt = cq.from(Favorite.class);
             cq.select(em.getCriteriaBuilder().count(rt));
             Query q = em.createQuery(cq);
             return ((Long) q.getSingleResult()).intValue();

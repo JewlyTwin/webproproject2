@@ -22,7 +22,7 @@ import model.controller.exceptions.RollbackFailureException;
 
 /**
  *
- * @author Computer
+ * @author earnnchp
  */
 public class OrderdetailJpaController implements Serializable {
 

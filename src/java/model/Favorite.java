@@ -6,7 +6,6 @@
 package model;
 
 import java.io.Serializable;
-import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -18,8 +17,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -27,51 +24,39 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author earnnchp
  */
 @Entity
-@Table(name = "PAYMENT")
+@Table(name = "FAVORITE")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Payment.findAll", query = "SELECT p FROM Payment p")
-    , @NamedQuery(name = "Payment.findByPaymentid", query = "SELECT p FROM Payment p WHERE p.paymentid = :paymentid")
-    , @NamedQuery(name = "Payment.findByPaydate", query = "SELECT p FROM Payment p WHERE p.paydate = :paydate")})
-public class Payment implements Serializable {
+    @NamedQuery(name = "Favorite.findAll", query = "SELECT f FROM Favorite f")
+    , @NamedQuery(name = "Favorite.findByFavid", query = "SELECT f FROM Favorite f WHERE f.favid = :favid")})
+public class Favorite implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "PAYMENTID")
-    private Integer paymentid;
-    @Column(name = "PAYDATE")
-    @Temporal(TemporalType.DATE)
-    private Date paydate;
+    @Column(name = "FAVID")
+    private Integer favid;
     @JoinColumn(name = "USERNAME", referencedColumnName = "USERNAME")
     @ManyToOne
     private Customer username;
-    @JoinColumn(name = "ORDERID", referencedColumnName = "ORDERID")
+    @JoinColumn(name = "PRODUCTID", referencedColumnName = "PRODUCTID")
     @ManyToOne
-    private Orders orderid;
+    private Product productid;
 
-    public Payment() {
+    public Favorite() {
     }
 
-    public Payment(Integer paymentid) {
-        this.paymentid = paymentid;
+    public Favorite(Integer favid) {
+        this.favid = favid;
     }
 
-    public Integer getPaymentid() {
-        return paymentid;
+    public Integer getFavid() {
+        return favid;
     }
 
-    public void setPaymentid(Integer paymentid) {
-        this.paymentid = paymentid;
-    }
-
-    public Date getPaydate() {
-        return paydate;
-    }
-
-    public void setPaydate(Date paydate) {
-        this.paydate = paydate;
+    public void setFavid(Integer favid) {
+        this.favid = favid;
     }
 
     public Customer getUsername() {
@@ -82,29 +67,29 @@ public class Payment implements Serializable {
         this.username = username;
     }
 
-    public Orders getOrderid() {
-        return orderid;
+    public Product getProductid() {
+        return productid;
     }
 
-    public void setOrderid(Orders orderid) {
-        this.orderid = orderid;
+    public void setProductid(Product productid) {
+        this.productid = productid;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (paymentid != null ? paymentid.hashCode() : 0);
+        hash += (favid != null ? favid.hashCode() : 0);
         return hash;
     }
 
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Payment)) {
+        if (!(object instanceof Favorite)) {
             return false;
         }
-        Payment other = (Payment) object;
-        if ((this.paymentid == null && other.paymentid != null) || (this.paymentid != null && !this.paymentid.equals(other.paymentid))) {
+        Favorite other = (Favorite) object;
+        if ((this.favid == null && other.favid != null) || (this.favid != null && !this.favid.equals(other.favid))) {
             return false;
         }
         return true;
@@ -112,7 +97,7 @@ public class Payment implements Serializable {
 
     @Override
     public String toString() {
-        return "model.Payment[ paymentid=" + paymentid + " ]";
+        return "model.Favorite[ favid=" + favid + " ]";
     }
     
 }

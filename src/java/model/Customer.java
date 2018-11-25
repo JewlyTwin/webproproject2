@@ -25,7 +25,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Computer
+ * @author earnnchp
  */
 @Entity
 @Table(name = "CUSTOMER")
@@ -77,7 +77,11 @@ public class Customer implements Serializable {
     @Temporal(TemporalType.DATE)
     private Date dob;
     @OneToMany(mappedBy = "username")
+    private List<Payment> paymentList;
+    @OneToMany(mappedBy = "username")
     private List<Orders> ordersList;
+    @OneToMany(mappedBy = "username")
+    private List<Favorite> favoriteList;
 
     public Customer() {
     }
@@ -152,12 +156,30 @@ public class Customer implements Serializable {
     }
 
     @XmlTransient
+    public List<Payment> getPaymentList() {
+        return paymentList;
+    }
+
+    public void setPaymentList(List<Payment> paymentList) {
+        this.paymentList = paymentList;
+    }
+
+    @XmlTransient
     public List<Orders> getOrdersList() {
         return ordersList;
     }
 
     public void setOrdersList(List<Orders> ordersList) {
         this.ordersList = ordersList;
+    }
+
+    @XmlTransient
+    public List<Favorite> getFavoriteList() {
+        return favoriteList;
+    }
+
+    public void setFavoriteList(List<Favorite> favoriteList) {
+        this.favoriteList = favoriteList;
     }
 
     @Override

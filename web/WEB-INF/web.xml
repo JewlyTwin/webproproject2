@@ -82,6 +82,30 @@
         <servlet-name>ProductDetailServlet</servlet-name>
         <servlet-class>servlet.ProductDetailServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AddFavServlet</servlet-name>
+        <servlet-class>servlet.AddFavServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EditFavServlet</servlet-name>
+        <servlet-class>servlet.EditFavServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>FavoriteServlet</servlet-name>
+        <servlet-class>servlet.FavoriteServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>HistoryServlet</servlet-name>
+        <servlet-class>servlet.HistoryServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>OrderServlet</servlet-name>
+        <servlet-class>servlet.OrderServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>PaymentServlet</servlet-name>
+        <servlet-class>servlet.PaymentServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
         <url-pattern>/Login</url-pattern>
@@ -129,6 +153,30 @@
     <servlet-mapping>
         <servlet-name>ProductDetailServlet</servlet-name>
         <url-pattern>/ProductDetail</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddFavServlet</servlet-name>
+        <url-pattern>/AddFav</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EditFavServlet</servlet-name>
+        <url-pattern>/EditFav</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>FavoriteServlet</servlet-name>
+        <url-pattern>/Favorite</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>HistoryServlet</servlet-name>
+        <url-pattern>/History</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>OrderServlet</servlet-name>
+        <url-pattern>/Order</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PaymentServlet</servlet-name>
+        <url-pattern>/Payment</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>

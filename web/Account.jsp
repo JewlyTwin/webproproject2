@@ -298,8 +298,12 @@
     <b>Tel No.</b>  ${cus.telno}<br><br>
     <b>Address</b>  ${cus.address}<br><br>
     <b>Date of Birth</b>    ${cus.dob}<br><br>
+    
+    <form action="History" method="get">
+        <br><input type="submit" value="History"/>
+    </form>
     <form action="EditProfile" method="get">
-        <br><input type="submit" value="Edit Profile"/><br>
+        <input type="submit" value="Edit Profile"/><br>
     </form>
             </div>
     </div>

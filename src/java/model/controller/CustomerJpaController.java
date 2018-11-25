@@ -10,20 +10,22 @@ import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import model.Orders;
+import model.Payment;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.transaction.UserTransaction;
 import model.Customer;
+import model.Orders;
+import model.Favorite;
 import model.controller.exceptions.NonexistentEntityException;
 import model.controller.exceptions.PreexistingEntityException;
 import model.controller.exceptions.RollbackFailureException;
 
 /**
  *
- * @author Computer
+ * @author earnnchp
  */
 public class CustomerJpaController implements Serializable {
 
@@ -39,20 +41,47 @@ public class CustomerJpaController implements Serializable {
     }
 
     public void create(Customer customer) throws PreexistingEntityException, RollbackFailureException, Exception {
+        if (customer.getPaymentList() == null) {
+            customer.setPaymentList(new ArrayList<Payment>());
+        }
         if (customer.getOrdersList() == null) {
             customer.setOrdersList(new ArrayList<Orders>());
+        }
+        if (customer.getFavoriteList() == null) {
+            customer.setFavoriteList(new ArrayList<Favorite>());
         }
         EntityManager em = null;
         try {
             utx.begin();
             em = getEntityManager();
+            List<Payment> attachedPaymentList = new ArrayList<Payment>();
+            for (Payment paymentListPaymentToAttach : customer.getPaymentList()) {
+                paymentListPaymentToAttach = em.getReference(paymentListPaymentToAttach.getClass(), paymentListPaymentToAttach.getPaymentid());
+                attachedPaymentList.add(paymentListPaymentToAttach);
+            }
+            customer.setPaymentList(attachedPaymentList);
             List<Orders> attachedOrdersList = new ArrayList<Orders>();
             for (Orders ordersListOrdersToAttach : customer.getOrdersList()) {
                 ordersListOrdersToAttach = em.getReference(ordersListOrdersToAttach.getClass(), ordersListOrdersToAttach.getOrderid());
                 attachedOrdersList.add(ordersListOrdersToAttach);
             }
             customer.setOrdersList(attachedOrdersList);
+            List<Favorite> attachedFavoriteList = new ArrayList<Favorite>();
+            for (Favorite favoriteListFavoriteToAttach : customer.getFavoriteList()) {
+                favoriteListFavoriteToAttach = em.getReference(favoriteListFavoriteToAttach.getClass(), favoriteListFavoriteToAttach.getFavid());
+                attachedFavoriteList.add(favoriteListFavoriteToAttach);
+            }
+            customer.setFavoriteList(attachedFavoriteList);
             em.persist(customer);
+            for (Payment paymentListPayment : customer.getPaymentList()) {
+                Customer oldUsernameOfPaymentListPayment = paymentListPayment.getUsername();
+                paymentListPayment.setUsername(customer);
+                paymentListPayment = em.merge(paymentListPayment);
+                if (oldUsernameOfPaymentListPayment != null) {
+                    oldUsernameOfPaymentListPayment.getPaymentList().remove(paymentListPayment);
+                    oldUsernameOfPaymentListPayment = em.merge(oldUsernameOfPaymentListPayment);
+                }
+            }
             for (Orders ordersListOrders : customer.getOrdersList()) {
                 Customer oldUsernameOfOrdersListOrders = ordersListOrders.getUsername();
                 ordersListOrders.setUsername(customer);
@@ -60,6 +89,15 @@ public class CustomerJpaController implements Serializable {
                 if (oldUsernameOfOrdersListOrders != null) {
                     oldUsernameOfOrdersListOrders.getOrdersList().remove(ordersListOrders);
                     oldUsernameOfOrdersListOrders = em.merge(oldUsernameOfOrdersListOrders);
+                }
+            }
+            for (Favorite favoriteListFavorite : customer.getFavoriteList()) {
+                Customer oldUsernameOfFavoriteListFavorite = favoriteListFavorite.getUsername();
+                favoriteListFavorite.setUsername(customer);
+                favoriteListFavorite = em.merge(favoriteListFavorite);
+                if (oldUsernameOfFavoriteListFavorite != null) {
+                    oldUsernameOfFavoriteListFavorite.getFavoriteList().remove(favoriteListFavorite);
+                    oldUsernameOfFavoriteListFavorite = em.merge(oldUsernameOfFavoriteListFavorite);
                 }
             }
             utx.commit();
@@ -86,8 +124,19 @@ public class CustomerJpaController implements Serializable {
             utx.begin();
             em = getEntityManager();
             Customer persistentCustomer = em.find(Customer.class, customer.getUsername());
+            List<Payment> paymentListOld = persistentCustomer.getPaymentList();
+            List<Payment> paymentListNew = customer.getPaymentList();
             List<Orders> ordersListOld = persistentCustomer.getOrdersList();
             List<Orders> ordersListNew = customer.getOrdersList();
+            List<Favorite> favoriteListOld = persistentCustomer.getFavoriteList();
+            List<Favorite> favoriteListNew = customer.getFavoriteList();
+            List<Payment> attachedPaymentListNew = new ArrayList<Payment>();
+            for (Payment paymentListNewPaymentToAttach : paymentListNew) {
+                paymentListNewPaymentToAttach = em.getReference(paymentListNewPaymentToAttach.getClass(), paymentListNewPaymentToAttach.getPaymentid());
+                attachedPaymentListNew.add(paymentListNewPaymentToAttach);
+            }
+            paymentListNew = attachedPaymentListNew;
+            customer.setPaymentList(paymentListNew);
             List<Orders> attachedOrdersListNew = new ArrayList<Orders>();
             for (Orders ordersListNewOrdersToAttach : ordersListNew) {
                 ordersListNewOrdersToAttach = em.getReference(ordersListNewOrdersToAttach.getClass(), ordersListNewOrdersToAttach.getOrderid());
@@ -95,7 +144,31 @@ public class CustomerJpaController implements Serializable {
             }
             ordersListNew = attachedOrdersListNew;
             customer.setOrdersList(ordersListNew);
+            List<Favorite> attachedFavoriteListNew = new ArrayList<Favorite>();
+            for (Favorite favoriteListNewFavoriteToAttach : favoriteListNew) {
+                favoriteListNewFavoriteToAttach = em.getReference(favoriteListNewFavoriteToAttach.getClass(), favoriteListNewFavoriteToAttach.getFavid());
+                attachedFavoriteListNew.add(favoriteListNewFavoriteToAttach);
+            }
+            favoriteListNew = attachedFavoriteListNew;
+            customer.setFavoriteList(favoriteListNew);
             customer = em.merge(customer);
+            for (Payment paymentListOldPayment : paymentListOld) {
+                if (!paymentListNew.contains(paymentListOldPayment)) {
+                    paymentListOldPayment.setUsername(null);
+                    paymentListOldPayment = em.merge(paymentListOldPayment);
+                }
+            }
+            for (Payment paymentListNewPayment : paymentListNew) {
+                if (!paymentListOld.contains(paymentListNewPayment)) {
+                    Customer oldUsernameOfPaymentListNewPayment = paymentListNewPayment.getUsername();
+                    paymentListNewPayment.setUsername(customer);
+                    paymentListNewPayment = em.merge(paymentListNewPayment);
+                    if (oldUsernameOfPaymentListNewPayment != null && !oldUsernameOfPaymentListNewPayment.equals(customer)) {
+                        oldUsernameOfPaymentListNewPayment.getPaymentList().remove(paymentListNewPayment);
+                        oldUsernameOfPaymentListNewPayment = em.merge(oldUsernameOfPaymentListNewPayment);
+                    }
+                }
+            }
             for (Orders ordersListOldOrders : ordersListOld) {
                 if (!ordersListNew.contains(ordersListOldOrders)) {
                     ordersListOldOrders.setUsername(null);
@@ -110,6 +183,23 @@ public class CustomerJpaController implements Serializable {
                     if (oldUsernameOfOrdersListNewOrders != null && !oldUsernameOfOrdersListNewOrders.equals(customer)) {
                         oldUsernameOfOrdersListNewOrders.getOrdersList().remove(ordersListNewOrders);
                         oldUsernameOfOrdersListNewOrders = em.merge(oldUsernameOfOrdersListNewOrders);
+                    }
+                }
+            }
+            for (Favorite favoriteListOldFavorite : favoriteListOld) {
+                if (!favoriteListNew.contains(favoriteListOldFavorite)) {
+                    favoriteListOldFavorite.setUsername(null);
+                    favoriteListOldFavorite = em.merge(favoriteListOldFavorite);
+                }
+            }
+            for (Favorite favoriteListNewFavorite : favoriteListNew) {
+                if (!favoriteListOld.contains(favoriteListNewFavorite)) {
+                    Customer oldUsernameOfFavoriteListNewFavorite = favoriteListNewFavorite.getUsername();
+                    favoriteListNewFavorite.setUsername(customer);
+                    favoriteListNewFavorite = em.merge(favoriteListNewFavorite);
+                    if (oldUsernameOfFavoriteListNewFavorite != null && !oldUsernameOfFavoriteListNewFavorite.equals(customer)) {
+                        oldUsernameOfFavoriteListNewFavorite.getFavoriteList().remove(favoriteListNewFavorite);
+                        oldUsernameOfFavoriteListNewFavorite = em.merge(oldUsernameOfFavoriteListNewFavorite);
                     }
                 }
             }
@@ -147,10 +237,20 @@ public class CustomerJpaController implements Serializable {
             } catch (EntityNotFoundException enfe) {
                 throw new NonexistentEntityException("The customer with id " + id + " no longer exists.", enfe);
             }
+            List<Payment> paymentList = customer.getPaymentList();
+            for (Payment paymentListPayment : paymentList) {
+                paymentListPayment.setUsername(null);
+                paymentListPayment = em.merge(paymentListPayment);
+            }
             List<Orders> ordersList = customer.getOrdersList();
             for (Orders ordersListOrders : ordersList) {
                 ordersListOrders.setUsername(null);
                 ordersListOrders = em.merge(ordersListOrders);
+            }
+            List<Favorite> favoriteList = customer.getFavoriteList();
+            for (Favorite favoriteListFavorite : favoriteList) {
+                favoriteListFavorite.setUsername(null);
+                favoriteListFavorite = em.merge(favoriteListFavorite);
             }
             em.remove(customer);
             utx.commit();

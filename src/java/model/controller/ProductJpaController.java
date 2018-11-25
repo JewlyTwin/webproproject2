@@ -10,19 +10,20 @@ import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import model.Orderdetail;
+import model.Favorite;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.transaction.UserTransaction;
+import model.Orderdetail;
 import model.Product;
 import model.controller.exceptions.NonexistentEntityException;
 import model.controller.exceptions.RollbackFailureException;
 
 /**
  *
- * @author Computer
+ * @author earnnchp
  */
 public class ProductJpaController implements Serializable {
 
@@ -38,6 +39,9 @@ public class ProductJpaController implements Serializable {
     }
 
     public void create(Product product) throws RollbackFailureException, Exception {
+        if (product.getFavoriteList() == null) {
+            product.setFavoriteList(new ArrayList<Favorite>());
+        }
         if (product.getOrderdetailList() == null) {
             product.setOrderdetailList(new ArrayList<Orderdetail>());
         }
@@ -45,6 +49,12 @@ public class ProductJpaController implements Serializable {
         try {
             utx.begin();
             em = getEntityManager();
+            List<Favorite> attachedFavoriteList = new ArrayList<Favorite>();
+            for (Favorite favoriteListFavoriteToAttach : product.getFavoriteList()) {
+                favoriteListFavoriteToAttach = em.getReference(favoriteListFavoriteToAttach.getClass(), favoriteListFavoriteToAttach.getFavid());
+                attachedFavoriteList.add(favoriteListFavoriteToAttach);
+            }
+            product.setFavoriteList(attachedFavoriteList);
             List<Orderdetail> attachedOrderdetailList = new ArrayList<Orderdetail>();
             for (Orderdetail orderdetailListOrderdetailToAttach : product.getOrderdetailList()) {
                 orderdetailListOrderdetailToAttach = em.getReference(orderdetailListOrderdetailToAttach.getClass(), orderdetailListOrderdetailToAttach.getOrderdetailid());
@@ -52,6 +62,15 @@ public class ProductJpaController implements Serializable {
             }
             product.setOrderdetailList(attachedOrderdetailList);
             em.persist(product);
+            for (Favorite favoriteListFavorite : product.getFavoriteList()) {
+                Product oldProductidOfFavoriteListFavorite = favoriteListFavorite.getProductid();
+                favoriteListFavorite.setProductid(product);
+                favoriteListFavorite = em.merge(favoriteListFavorite);
+                if (oldProductidOfFavoriteListFavorite != null) {
+                    oldProductidOfFavoriteListFavorite.getFavoriteList().remove(favoriteListFavorite);
+                    oldProductidOfFavoriteListFavorite = em.merge(oldProductidOfFavoriteListFavorite);
+                }
+            }
             for (Orderdetail orderdetailListOrderdetail : product.getOrderdetailList()) {
                 Product oldProductidOfOrderdetailListOrderdetail = orderdetailListOrderdetail.getProductid();
                 orderdetailListOrderdetail.setProductid(product);
@@ -82,8 +101,17 @@ public class ProductJpaController implements Serializable {
             utx.begin();
             em = getEntityManager();
             Product persistentProduct = em.find(Product.class, product.getProductid());
+            List<Favorite> favoriteListOld = persistentProduct.getFavoriteList();
+            List<Favorite> favoriteListNew = product.getFavoriteList();
             List<Orderdetail> orderdetailListOld = persistentProduct.getOrderdetailList();
             List<Orderdetail> orderdetailListNew = product.getOrderdetailList();
+            List<Favorite> attachedFavoriteListNew = new ArrayList<Favorite>();
+            for (Favorite favoriteListNewFavoriteToAttach : favoriteListNew) {
+                favoriteListNewFavoriteToAttach = em.getReference(favoriteListNewFavoriteToAttach.getClass(), favoriteListNewFavoriteToAttach.getFavid());
+                attachedFavoriteListNew.add(favoriteListNewFavoriteToAttach);
+            }
+            favoriteListNew = attachedFavoriteListNew;
+            product.setFavoriteList(favoriteListNew);
             List<Orderdetail> attachedOrderdetailListNew = new ArrayList<Orderdetail>();
             for (Orderdetail orderdetailListNewOrderdetailToAttach : orderdetailListNew) {
                 orderdetailListNewOrderdetailToAttach = em.getReference(orderdetailListNewOrderdetailToAttach.getClass(), orderdetailListNewOrderdetailToAttach.getOrderdetailid());
@@ -92,6 +120,23 @@ public class ProductJpaController implements Serializable {
             orderdetailListNew = attachedOrderdetailListNew;
             product.setOrderdetailList(orderdetailListNew);
             product = em.merge(product);
+            for (Favorite favoriteListOldFavorite : favoriteListOld) {
+                if (!favoriteListNew.contains(favoriteListOldFavorite)) {
+                    favoriteListOldFavorite.setProductid(null);
+                    favoriteListOldFavorite = em.merge(favoriteListOldFavorite);
+                }
+            }
+            for (Favorite favoriteListNewFavorite : favoriteListNew) {
+                if (!favoriteListOld.contains(favoriteListNewFavorite)) {
+                    Product oldProductidOfFavoriteListNewFavorite = favoriteListNewFavorite.getProductid();
+                    favoriteListNewFavorite.setProductid(product);
+                    favoriteListNewFavorite = em.merge(favoriteListNewFavorite);
+                    if (oldProductidOfFavoriteListNewFavorite != null && !oldProductidOfFavoriteListNewFavorite.equals(product)) {
+                        oldProductidOfFavoriteListNewFavorite.getFavoriteList().remove(favoriteListNewFavorite);
+                        oldProductidOfFavoriteListNewFavorite = em.merge(oldProductidOfFavoriteListNewFavorite);
+                    }
+                }
+            }
             for (Orderdetail orderdetailListOldOrderdetail : orderdetailListOld) {
                 if (!orderdetailListNew.contains(orderdetailListOldOrderdetail)) {
                     orderdetailListOldOrderdetail.setProductid(null);
@@ -142,6 +187,11 @@ public class ProductJpaController implements Serializable {
                 product.getProductid();
             } catch (EntityNotFoundException enfe) {
                 throw new NonexistentEntityException("The product with id " + id + " no longer exists.", enfe);
+            }
+            List<Favorite> favoriteList = product.getFavoriteList();
+            for (Favorite favoriteListFavorite : favoriteList) {
+                favoriteListFavorite.setProductid(null);
+                favoriteListFavorite = em.merge(favoriteListFavorite);
             }
             List<Orderdetail> orderdetailList = product.getOrderdetailList();
             for (Orderdetail orderdetailListOrderdetail : orderdetailList) {
@@ -196,7 +246,6 @@ public class ProductJpaController implements Serializable {
             em.close();
         }
     }
-    
     public List<Product> findProductname(String name) {
         EntityManager em = getEntityManager();
         try {

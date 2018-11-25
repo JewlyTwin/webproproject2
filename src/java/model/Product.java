@@ -24,7 +24,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Computer
+ * @author earnnchp
  */
 @Entity
 @Table(name = "PRODUCT")
@@ -32,7 +32,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "Product.findAll", query = "SELECT p FROM Product p")
     , @NamedQuery(name = "Product.findByProductid", query = "SELECT p FROM Product p WHERE p.productid = :productid")
-    , @NamedQuery(name = "Product.findByProductname", query = "SELECT p FROM Product p WHERE p.productname like :productname")
+    , @NamedQuery(name = "Product.findByProductname", query = "SELECT p FROM Product p WHERE p.productname = :productname")
     , @NamedQuery(name = "Product.findByProducttype", query = "SELECT p FROM Product p WHERE p.producttype = :producttype")
     , @NamedQuery(name = "Product.findByUnitprice", query = "SELECT p FROM Product p WHERE p.unitprice = :unitprice")
     , @NamedQuery(name = "Product.findByWeight", query = "SELECT p FROM Product p WHERE p.weight = :weight")
@@ -72,6 +72,8 @@ public class Product implements Serializable {
     @Size(max = 150)
     @Column(name = "DETAIL")
     private String detail;
+    @OneToMany(mappedBy = "productid")
+    private List<Favorite> favoriteList;
     @OneToMany(mappedBy = "productid")
     private List<Orderdetail> orderdetailList;
 
@@ -145,6 +147,15 @@ public class Product implements Serializable {
 
     public void setDetail(String detail) {
         this.detail = detail;
+    }
+
+    @XmlTransient
+    public List<Favorite> getFavoriteList() {
+        return favoriteList;
+    }
+
+    public void setFavoriteList(List<Favorite> favoriteList) {
+        this.favoriteList = favoriteList;
     }
 
     @XmlTransient

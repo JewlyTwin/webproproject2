@@ -279,7 +279,7 @@
                     <input type="text" id="lname" class="fadeIn third" name="lname" placeholder="last name"required>
                     <input type="text" id="tel" class="fadeIn fourth" name="tel" placeholder="telephone number"required>
                     <input type="text" id="address" class="fadeIn fourth" name="address" placeholder="address"required>
-                    <input type="date" id="date" class="fadeIn fourth"name="dob" placeholder="Date of Birth" >
+                    <input type="date" id="date" class="fadeIn fourth"name="dob" placeholder="Date of Birth" required>
                     <span style="color: indianred"/>${wrong}<br>
                     <input type="submit" class="fadeIn fourth" value="Register">
                 </form>

@@ -7,8 +7,7 @@ package servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.Resource;
@@ -21,14 +20,15 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.transaction.UserTransaction;
 import model.Customer;
+import model.Orders;
+import model.Payment;
 import model.controller.CustomerJpaController;
-import model.controller.exceptions.RollbackFailureException;
 
 /**
  *
  * @author Computer
  */
-public class EditProfileServlet extends HttpServlet {
+public class HistoryServlet extends HttpServlet {
 
     @PersistenceUnit(unitName = "WonderFruitWebAppPU")
     EntityManagerFactory emf;
@@ -46,52 +46,21 @@ public class EditProfileServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException, RollbackFailureException, Exception {
-    HttpSession session = request.getSession(false);
-        
-        try{
-            
-        String password = request.getParameter("pass");
-        String fname = request.getParameter("fname");
-        String lname = request.getParameter("lname");
-        String tel = request.getParameter("tel");
-        String address = request.getParameter("address");
-        String dobStr = request.getParameter("dob");
-        SimpleDateFormat d = new SimpleDateFormat("yyyy-MM-dd");
-        Date dob = d.parse(dobStr);
+            throws ServletException, IOException, Exception {
+        HttpSession session = request.getSession(false);
+        Customer cus = (Customer) session.getAttribute("cus");
+        CustomerJpaController cusCtrl = new CustomerJpaController(utx, emf);
+        Customer newcus = cusCtrl.findCustomer(cus.getUsername());
 
-        if (password != null && password.trim().length() > 0
-                && fname != null && fname.trim().length() > 0
-                && lname != null && lname.trim().length() > 0
-                && tel != null && tel.trim().length() > 0
-                && address != null && address.trim().length() > 0) {
-            
-            Customer cus = (Customer)session.getAttribute("cus");
-            CustomerJpaController cusCtrl = new CustomerJpaController(utx, emf);
-            Customer newcus = cusCtrl.findCustomer(cus.getUsername());
-            
-            newcus.setPassword(password);
-            newcus.setFname(fname);
-            newcus.setLname(lname);
-            newcus.setTelno(tel);
-            newcus.setAddress(address);
-            newcus.setDob(dob);
-           
-            cusCtrl.edit(newcus);
+        List<Payment> paylist = newcus.getPaymentList();
+        request.setAttribute("pay", paylist);
 
-            session.setAttribute("cus", newcus);
-            getServletContext().getRequestDispatcher("/Account.jsp").forward(request, response);
-            return;
-        }
-       }catch (NullPointerException e) {
-            getServletContext().getRequestDispatcher("/EditProfile.jsp").forward(request, response);
-            return;
-        }
-        getServletContext().getRequestDispatcher("/EditProfile.jsp").forward(request, response);
+        session.setAttribute("cus", newcus);
+        getServletContext().getRequestDispatcher("/HistoryPage.jsp").forward(request, response);
 
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+// <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *
@@ -103,7 +72,11 @@ public class EditProfileServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        getServletContext().getRequestDispatcher("/EditProfile.jsp").forward(request, response);
+        try {
+            processRequest(request, response);
+        } catch (Exception ex) {
+            Logger.getLogger(HistoryServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -120,7 +93,7 @@ public class EditProfileServlet extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (Exception ex) {
-            Logger.getLogger(EditProfileServlet.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(HistoryServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
