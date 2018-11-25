@@ -46,7 +46,6 @@ public class SearchServlet extends HttpServlet {
         String search = request.getParameter("search");
         ProductJpaController jpa = new ProductJpaController(utx, emf);
         List<Product> result = jpa.findProductname(search);
-        System.out.println(result);
         session.setAttribute("products", result);
         response.sendRedirect("ProductList.jsp");
 
