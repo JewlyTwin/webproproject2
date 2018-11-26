@@ -40,7 +40,7 @@ UserTransaction utx;
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        HttpSession session = request.getSession();
+         HttpSession session = request.getSession(false);
         Customer cus = (Customer)session.getAttribute("cus");
         
         CustomerJpaController cusCtrl = new CustomerJpaController(utx, emf);
