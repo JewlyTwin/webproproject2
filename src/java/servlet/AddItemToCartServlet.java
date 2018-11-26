@@ -41,13 +41,12 @@ public class AddItemToCartServlet extends HttpServlet {
             session.setAttribute("cart", cart);
         }
         String Productid = request.getParameter("productid");
-        System.out.println(Productid);
 
         int productid = Integer.parseInt(Productid);
         ProductJpaController productJpaCtrl = new ProductJpaController(utx, emf);
         Product p = productJpaCtrl.findProduct(productid);
         cart.add(p);
-        response.sendRedirect("ProductList.jsp");
+        response.sendRedirect("listitem");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

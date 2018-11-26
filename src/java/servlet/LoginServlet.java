@@ -53,7 +53,7 @@ public class LoginServlet extends HttpServlet {
                 if (passFromDB.equals(password)) {
                     HttpSession session = request.getSession();
                     session.setAttribute("cus", cus);
-                    getServletContext().getRequestDispatcher("/ProductList.jsp").forward(request, response);
+                    getServletContext().getRequestDispatcher("/listitem").forward(request, response);
                     return;
                 }
             }

@@ -47,7 +47,6 @@ public class listitemServlet extends HttpServlet {
         ProductJpaController jpa = new ProductJpaController(utx, emf);
         List<Product> products = jpa.findProductEntities();
         request.setAttribute("products", products);
-        System.out.println(products);
         
 //        request.setAttribute("favcom",request.getAttribute("favcom"));
         getServletContext().getRequestDispatcher("/ProductList.jsp").forward(request, response);

@@ -29,22 +29,26 @@
                     <li class="nav-item">
                         <a class="nav-link" href="#">About us</a>
                     </li>
-                    <c:if test="${cart!=null}">
-                    <a href="CheckCart">Your Cart:(${cart.totalQuantity})</a>
-                </c:if>
-                <span style="padding-left: 35em;">
-                <c:choose>
-                    <c:when test="${cus != null}">
-                        Hello, &nbsp; <a href="Account">${cus.username}</a> 
-                        &nbsp; &nbsp; &nbsp;<a href="Logout">Logout</a>
-                    </c:when>
-                    <c:otherwise>
-                        Hello, &nbsp; <a href="Login">Guest</a>
-                        &nbsp; &nbsp; &nbsp;<a href="Login">Login</a>
-                        &nbsp; &nbsp; &nbsp;<a href="Register">Register</a>
-                    </c:otherwise>
-                </c:choose>
-                </span>
+                    <li class="nav-item">
+                        <c:if test="${cart!=null}">
+                            <a class="nav-link" href="CheckCart">Your Cart:(${cart.totalQuantity})</a>
+                        </c:if>
+                    </li>
+                    <c:choose>
+                        <c:when test="${cus != null}">
+                            <li class="nav-item">
+                                <span class="nav-link">Hello, <a href="Account">${cus.username}</a></span> 
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="Logout">Logout</a>
+                            </li>
+                        </c:when>
+                        <c:otherwise>
+                            Hello, &nbsp;<a href="Login">Guest</a>
+                            &nbsp; &nbsp; &nbsp;<a href="Login">Login</a>
+                            &nbsp; &nbsp; &nbsp;<a href="Register">Register</a>
+                        </c:otherwise>
+                    </c:choose>
                 </ul>
             </div>
         </nav>
