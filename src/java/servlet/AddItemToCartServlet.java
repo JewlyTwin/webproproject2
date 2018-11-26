@@ -47,7 +47,7 @@ public class AddItemToCartServlet extends HttpServlet {
         ProductJpaController productJpaCtrl = new ProductJpaController(utx, emf);
         Product p = productJpaCtrl.findProduct(productid);
         cart.add(p);
-        response.sendRedirect("product");
+        response.sendRedirect("ProductList.jsp");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
