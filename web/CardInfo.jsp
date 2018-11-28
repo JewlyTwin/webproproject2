@@ -1,7 +1,7 @@
 <%-- 
-    Document   : Payment
-    Created on : Nov 20, 2018, 2:25:57 PM
-    Author     : Computer
+    Document   : CardInfo
+    Created on : Nov 28, 2018, 8:23:24 PM
+    Author     : earnnchp
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -283,13 +283,16 @@
         <div class="wrapper fadeInDown">
             <div id="formContent">
                 <div class="fadeIn first">
-                <h1>Confirm payment</h1>
+                <h1>Payment</h1>
                 </div>
-                <form action="Payment" method="post">
-            
-            <input type="submit" value="confrim">
+        
+        <form action="Payment" method="post">
+            Card ID <br><input type="text" name="cardid" required><br>
+            Card Owner <br><input type="text" name="owner" required><br>
+            EXP. Date <br><input type="date" name="exp" required><br>
+            CVV <br><input type="text" name="cvv" required><br>
+            <input type="submit" value="pay">
         </form>
-       
             </div>
         </div>
     </body>
