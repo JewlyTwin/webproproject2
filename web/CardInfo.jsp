@@ -287,11 +287,11 @@
                 </div>
         
         <form action="Payment" method="post">
-            Card ID: <input type="text" name="cardid"/><br>
-            Card Owner1: <input type="text" name="owner"/><br>
-            EXP. Date: <input type="date" name="exp"/><br>
-            CVV: <input type="text" name="cvv"/><br>
-            <input type="submit" value="pay"/>
+            Card ID <br><input type="text" name="cardid" required><br>
+            Card Owner <br><input type="text" name="owner" required><br>
+            EXP. Date <br><input type="date" name="exp" required><br>
+            CVV <br><input type="text" name="cvv" required><br>
+            <input type="submit" value="pay">
         </form>
             </div>
         </div>

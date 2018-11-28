@@ -283,16 +283,13 @@
         <div class="wrapper fadeInDown">
             <div id="formContent">
                 <div class="fadeIn first">
-                <h1>Payment</h1>
+                <h1>Confirm payment</h1>
                 </div>
-        
-        <form action="Payment" method="post">
-            Card ID: <input type="text" name="cardid"/><br>
-            Card Owner1: <input type="text" name="owner"/><br>
-            EXP. Date: <input type="date" name="exp"/><br>
-            CVV: <input type="text" name="cvv"/><br>
-            <input type="submit" value="pay"/>
+                <form action="Payment" method="post">
+            
+            <input type="submit" value="confrim">
         </form>
+       
             </div>
         </div>
     </body>
