@@ -13,6 +13,7 @@
         <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
         <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
         <style>
             /* STRUCTURE */
 
@@ -285,12 +286,19 @@
                 <div class="fadeIn first">
                 <h1>Confirm payment</h1>
                 </div>
-                <form action="Payment" method="post">
-            
-            <input type="submit" value="confrim">
-        </form>
-       
+                <input onclick="alert('msg')" type="button" value="confrim">
             </div>
         </div>
     </body>
+    <script>
+        function alert(msg){
+            if(msg == "msg"){
+                swal("Good job!", "You clicked the button!", "success")
+                .then((value) => {
+                    window.location="listitem"
+                });
+                
+            }
+        }
+    </script>
 </html>
