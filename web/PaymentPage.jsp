@@ -269,7 +269,16 @@
                 background-color: #F8B2A8;
             }*/
             
-            
+            .bg{
+                background-image: url("image/img10.jpg");
+                background-position: center;
+/*                background-repeat: repeat-x;
+*/                background-attachment: fixed;
+
+            }
+            .bgcolor {
+                background-color: whitesmoke;
+            }
         </style>
     </head>
      <body class="bgcolor">
@@ -281,13 +290,39 @@
             </div>
         </div>
          <%@include file="/include/Header.jsp"%>
+            <div class="bg">
         <div class="wrapper fadeInDown">
-            <div id="formContent">
                 <div class="fadeIn first">
                 <h1>Confirm payment</h1>
                 </div>
-                <input onclick="alert('msg')" type="button" value="confrim">
+        <div class="container">
+            <div class="col-8 offset-2">
+                <c:forEach items="${cart.itemsInCart}" var="line" varStatus="vs">
+                    <div class="row align-items-center justify-content-center my-3">
+                        <div class="col-12 col-md-3">
+                            <img class="image">
+                            <img width="100%"src="image/${line.product.producttype}/${line.product.productname}.jpg">
+                        </div>
+                        <div class="col-12 col-md-9">
+                            <h4>${line.product.productname}</h4>
+                            <span><p>Price : ${line.salePrice}</p><p>Total : ${line.totalPrice}</p></span>
+                            <span>
+                                <a href="PlusAndMinus?quantity=minus&productid=${line.product.productid}"><button type="button" class="mx-3 btn btn-danger">-</button></a>
+                                Quantity : ${line.quantity}
+                                <a href="PlusAndMinus?quantity=plus&productid=${line.product.productid}"><button type="button" class="mx-3 btn btn-success">+</button></a>
+                            </span>
+                        </div>
+                    </div>
+                </c:forEach>
+                <div class="row my-3 align-items-center">
+                    <h1>Total Price :: ${cart.totalPrice}</h1>
+                    <div class="ml-auto">
+                <input onclick="alert('msg')" type="submit" value="confrim">
+                    </div>
+                </div>
             </div>
+        </div>
+        </div>
         </div>
     </body>
     <script>

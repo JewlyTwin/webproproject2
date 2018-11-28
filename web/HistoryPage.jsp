@@ -13,10 +13,10 @@
         <title>History</title>
         <style>
         .bg{
-                background-image: url("image/Backgroud-img3.jpg");
-                background-position: right;
-                background-repeat: no-repeat;
-                background-attachment: fixed;
+                background-image: url("image/img9.jpg");
+                background-position: center;
+/*                background-repeat: repeat-x;
+*/                background-attachment: fixed;
 
             }
             .image {
@@ -116,6 +116,7 @@
 
         <%@include file="/include/Header.jsp"%>
         <h1>History</h1>
+        <div class="bg">
         
         <c:forEach items="${pay}" var="p">
             
@@ -125,6 +126,7 @@
             Paid Date: ${p.paydate}<br>
             <hr>  
         </c:forEach>
+        </div>
                 
     </body>
 </html>

@@ -12,10 +12,19 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
         <style>
-            
+            .bg{
+                background-image: url("image/img7.jpg");
+                background-position: center;
+/*                background-repeat: repeat-x;
+*/                background-attachment: fixed;
+
+            }
+/*            .bgcolor {
+                background-color: whitesmoke;
+            }*/
         </style>
     </head>
-    <body>
+    <body class="bgcolor">
         <%@include file="/include/Header.jsp"%>
         <div class="container">
             <div class="col-8 offset-2">
