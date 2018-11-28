@@ -4,6 +4,7 @@
     Author     : JewlyTwin
 --%>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -89,7 +90,7 @@
     <body>
         <nav class="shift">
             <ul>
-                <li><a href="#">Home</a></li>
+                <li><a href="listitem">Home</a></li>
                 <li><a href="Favorite">Favorite</a></li>
                 <li><a href="#">About us</a></li>
                 <li>
@@ -97,7 +98,7 @@
                         <a href="CheckCart">Your Cart:(${cart.totalQuantity})</a>
                     </c:if>
                 </li>
-                    <c:choose>
+                <c:choose>
                         <c:when test="${cus != null}">
                             <li>
                                 <a href="Account">${cus.username}</a> 
