@@ -59,11 +59,12 @@ public class PlusAndMinusServlet extends HttpServlet {
         if (quantity != null) {
             System.out.println("testestestesetsetsetsetsetsetsetset");
             if ("plus".equals(quantity)) {
-                Cart carts = (Cart) request.getSession(false).getAttribute("cart");
                 cart.add(p);
-//                response.sendRedirect("/CheckCart");
                 getServletContext().getRequestDispatcher("/CheckCart").forward(request, response);
-//                response.sendRedirect("/ShowCart.jsp");
+            }
+            if ("minus".equals(quantity)) {
+                cart.remove(p);
+                getServletContext().getRequestDispatcher("/CheckCart").forward(request, response);
             }
         }
         getServletContext().getRequestDispatcher("/listitem").forward(request, response);
