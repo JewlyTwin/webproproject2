@@ -241,7 +241,7 @@
         <div class="bg">
         <div class="container ">
             
-            <div class="wrapper fadeIn"
+            <div class="wrapper fadeIn">
                  <div class="formContent">
                      
                      <div class="card" style="width: 350px; ">
