@@ -77,6 +77,8 @@
                  <br><br>
             <div class="bg-text">
                 <h1 style="font-size: 50px;">Thank you!</h1>
+                <br>
+                <a href="listitem"><button type="button" class="btn btn-primary">Go Home</button></a>
             </div>
         </div>
     </body>
