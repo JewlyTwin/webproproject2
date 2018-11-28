@@ -39,7 +39,7 @@
                 <div class="row my-3 align-items-center">
                     <h1>Total Price :: ${cart.totalPrice}</h1>
                     <div class="ml-auto">
-                        <button type="button" class="mx-3 btn btn-primary">Check Out</button>
+                        <a href="Order"><button type="button" class="mx-3 btn btn-primary">Check Out</button></a>
                     </div>
                 </div>
             </div>
