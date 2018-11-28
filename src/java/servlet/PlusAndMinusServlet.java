@@ -24,7 +24,7 @@ import model.controller.ProductJpaController;
  *
  * @author JewlyTwin
  */
-public class CheckCartServlet extends HttpServlet {
+public class PlusAndMinusServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,18 +35,40 @@ public class CheckCartServlet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
+    @Resource
+    UserTransaction utx;
+
+    @PersistenceUnit(unitName = "WonderFruitWebAppPU")
+    EntityManagerFactory emf;
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        //plus and minus item in cart
         HttpSession session = request.getSession(false);
-        if(session != null){
-            Cart cart = (Cart) session.getAttribute("cart");
-            if(cart !=null){
-                getServletContext().getRequestDispatcher("/ShowCart.jsp").forward(request, response);
+
+        Cart cart = (Cart) session.getAttribute("cart");
+        String Productid = request.getParameter("productid");
+        int id = Integer.parseInt(Productid);
+        int productid = Integer.parseInt(Productid);
+        ProductJpaController productJpaCtrl = new ProductJpaController(utx, emf);
+        Product p = productJpaCtrl.findProduct(productid);
+
+//        String quantity = (String)session.getAttribute("quantity");
+        String quantity = request.getParameter("quantity");
+        if (quantity != null) {
+            System.out.println("testestestesetsetsetsetsetsetsetset");
+            if ("plus".equals(quantity)) {
+                Cart carts = (Cart) request.getSession(false).getAttribute("cart");
+                cart.add(p);
+//                response.sendRedirect("/CheckCart");
+                getServletContext().getRequestDispatcher("/CheckCart").forward(request, response);
+//                response.sendRedirect("/ShowCart.jsp");
             }
         }
-        
-        
+        getServletContext().getRequestDispatcher("/listitem").forward(request, response);
+
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

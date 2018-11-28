@@ -14,7 +14,7 @@ import java.util.Map;
  */
 public class Cart implements Serializable {
 
-    private Map<String, ItemsinCart> cart;
+    private Map<Integer, ItemsinCart> cart;
 
     public Cart() {
         cart = new HashMap();
@@ -23,7 +23,7 @@ public class Cart implements Serializable {
     public void add(Product p) {
         ItemsinCart items = cart.get(p.getProductid());
         if (items == null) {
-            cart.put(Integer.toString(p.getProductid()), new ItemsinCart(p));
+            cart.put(p.getProductid(), new ItemsinCart(p));
         } else {
             items.setQuantity(items.getQuantity() + 1);
         }

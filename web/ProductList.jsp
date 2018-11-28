@@ -83,37 +83,36 @@
 
         <%@include file="/include/Header.jsp"%>
         <div class="bgcolor">
-                <form class="form-inline my-2 my-lg-0" style="text-align: right;" action="Search" method="post">
-                    <span class="search">
-                        <input class="form-control mr-sm-2" type="text" name="search" placeholder="Search">
-                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>            
-                    </span>
-                </form>
+            <form class="form-inline my-2 my-lg-0" style="text-align: right;" action="Search" method="post">
+                <span class="search">
+                    <input class="form-control mr-sm-2" type="text" name="search" placeholder="Search">
+                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>            
+                </span>
+            </form>
 
-        <div class="container">
-            
-            <div class="col-12 ">
-                <div class="row">
-                    <c:forEach items="${products}" var="p" varStatus="i">
-                        <div class="col-4">
-                            <div class="col-12 my-3">
-                                <div class="card">
-                                    <img class="image" src="image/${p.producttype}/${p.productname}.jpg" alt="${p.productname}" height="200em;">
-                                    <div class="card-body">
-                                        <h5 class="card-title"><p>${p.productname}</p></h5>
-                                        <p class="card-text">${p.detail}</p>
-                                    </div>
-                                    <div class="card-body">
-                                        <a href="AddItemToCart?productid=${p.productid}" class="card-link">Add to cart</a>
-                                        <a href="AddFav?productid=${p.productid}" class="card-link" >Favorite</a>
-                                        <a href="ProductDetail?productid=${p.productid}" class="card-link">Detail</a>
+            <div class="container">
+                <div class="col-12 ">
+                    <div class="row">
+                        <c:forEach items="${products}" var="p" varStatus="i">
+                            <div class="col-4">
+                                <div class="col-12 my-3">
+                                    <div class="card">
+                                        <img class="image" src="image/${p.producttype}/${p.productname}.jpg" alt="${p.productname}" height="200em;">
+                                        <div class="card-body">
+                                            <h5 class="card-title"><p>${p.productname}</p></h5>
+                                            <p class="card-text">${p.detail}</p>
+                                        </div>
+                                        <div class="card-body">
+                                            <a href="AddItemToCart?productid=${p.productid}" class="card-link">Add to cart</a>
+                                            <a href="AddFav?productid=${p.productid}" class="card-link" >Favorite</a>
+                                            <a href="ProductDetail?productid=${p.productid}" class="card-link">Detail</a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </c:forEach>
-                </div>
-            </div>  
+                        </c:forEach>
+                    </div>
+                </div>  
             </div>
         </div>
     </body>

@@ -7,6 +7,7 @@ package servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import javax.annotation.Resource;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.PersistenceUnit;
@@ -17,6 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.transaction.UserTransaction;
 import model.Cart;
+import model.ItemsinCart;
 import model.Product;
 import model.controller.ProductJpaController;
 
@@ -41,12 +43,29 @@ public class AddItemToCartServlet extends HttpServlet {
             session.setAttribute("cart", cart);
         }
         String Productid = request.getParameter("productid");
+        int id = Integer.parseInt(Productid);
 
         int productid = Integer.parseInt(Productid);
         ProductJpaController productJpaCtrl = new ProductJpaController(utx, emf);
         Product p = productJpaCtrl.findProduct(productid);
+//        List<ItemsinCart> cartall = cart.getitemsInCart();
+//        for (ItemsinCart itemsinCart : cartall) {
+//            if(itemsinCart.getProduct().getProductid() == id){
+//                int old = itemsinCart.getQuantity();
+//                int quantity = old+1;
+//                itemsinCart.getProd
+//                System.out.println(quantity);
+//                  Product prosession = (Product)session.getAttribute("cart");
+//                  Product pro = productJpaCtrl.findProduct(prosession.getProductid());
+//                  pro
+                  
+//            }
+//        }
         cart.add(p);
+//        session.setAttribute("cart", cart);
         response.sendRedirect("listitem");
+        
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

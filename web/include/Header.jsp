@@ -20,33 +20,36 @@
             </button>-->
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Cart</a>
-                    </li>
-                    <li class="nav-item">
+                    <li class="navbar-text">
                         <a class="nav-link" href="Favorite">Favorite</a>
                     </li>
-                    <li class="nav-item">
+                    <li class="navbar-text">
                         <a class="nav-link" href="#">About us</a>
                     </li>
-                    <li class="nav-item">
+                    <li class="navbar-text">
                         <c:if test="${cart!=null}">
                             <a class="nav-link" href="CheckCart">Your Cart:(${cart.totalQuantity})</a>
                         </c:if>
                     </li>
                     <c:choose>
                         <c:when test="${cus != null}">
-                            <li class="nav-item">
+                            <li class="mr-auto navbar-text">
                                 <span class="nav-link">Hello, <a href="Account">${cus.username}</a></span> 
                             </li>
-                            <li class="nav-item">
+                            <li class="navbar-text">
                                 <a class="nav-link" href="Logout">Logout</a>
                             </li>
                         </c:when>
                         <c:otherwise>
-                            Hello, &nbsp;<a href="Login">Guest</a>
-                            &nbsp; &nbsp; &nbsp;<a href="Login">Login</a>
-                            &nbsp; &nbsp; &nbsp;<a href="Register">Register</a>
+                            <li class="navbar-text">
+                                <span class="nav-link">Hello,<a href="Login">Guest</a></span> 
+                            </li>
+                            <li class="navbar-text">
+                                <a class="nav-link" href="Login">Login</a>
+                            </li>
+                            <li class="navbar-text">
+                                <a class="nav-link" href="Register">Register</a>
+                            </li>
                         </c:otherwise>
                     </c:choose>
                 </ul>

@@ -106,6 +106,10 @@
         <servlet-name>PaymentServlet</servlet-name>
         <servlet-class>servlet.PaymentServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>PlusAndMinusServlet</servlet-name>
+        <servlet-class>servlet.PlusAndMinusServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
         <url-pattern>/Login</url-pattern>
@@ -177,6 +181,10 @@
     <servlet-mapping>
         <servlet-name>PaymentServlet</servlet-name>
         <url-pattern>/Payment</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PlusAndMinusServlet</servlet-name>
+        <url-pattern>/PlusAndMinus</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>
