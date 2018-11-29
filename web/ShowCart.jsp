@@ -10,21 +10,20 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Show Cart</title>
         <style>
             .bg{
                 background-image: url("image/img7.jpg");
                 background-position: center;
-/*                background-repeat: repeat-x;
-*/                background-attachment: fixed;
-
+                background-attachment: fixed;
             }
-/*            .bgcolor {
-                background-color: whitesmoke;
-            }*/
+            .font{
+                font-family: 'Rubik', sans-serif;
+            }
+
         </style>
     </head>
-    <body class="bgcolor">
+    <body class="bgcolor font">
         <%@include file="/include/Header.jsp"%>
         <div class="container">
             <div class="col-8 offset-2">
@@ -46,7 +45,7 @@
                     </div>
                 </c:forEach>
                 <div class="row my-3 align-items-center">
-                    <h1>Total Price :: ${cart.totalPrice}</h1>
+                    <h1>Total Price  :  ${cart.totalPrice}</h1>
                     <div class="ml-auto">
                         <a href="Order"><button type="button" class="mx-3 btn btn-primary">Check Out</button></a>
                     </div>

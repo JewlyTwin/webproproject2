@@ -271,7 +271,7 @@
             
         </style>
     </head>
-     <body class="bgcolor">
+     <body class="bgcolor font">
         <div class="test">
             <div class="bg-image"></div>
             <div class="bg-text">
