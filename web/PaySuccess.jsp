@@ -8,6 +8,7 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <link href="https://fonts.googleapis.com/css?family=Rubik" rel="stylesheet">
         <style>
          .mydiv {
                 position:absolute;
@@ -20,31 +21,15 @@
                 border: 1px solid #ccc;
                 background-color: #f3f3f3;
             }
-/*            .bg {
-                margin-top: 22em;
+            .bg {
+                /*margin-top: 22em;*/
                 height: 100%; 
                 background-repeat: no-repeat;
                 background-size: cover;
                 background-image: url("./image/bgindex.jpg");
 
-            }*/
-            .image {
-                background-image: url("image/bgindex.jpg"); 
-                background-repeat: no-repeat;
-                background-attachment: fixed;
-                background-position: center;
-                                background-size: cover;
-
             }
-            .bg-image {
-                background-image: url("image/bgindex.jpg"); 
-                filter: blur(2px);
-                height: 100%; 
-                background-position: center;
-                background-repeat: no-repeat;
-                background-size: cover;
-            }
-            .bg-text {
+             .bg-text {
                 background-color: rgb(0,0,0); /* Fallback color */
                 background-color: rgba(0,0,0, 0.4); /* Black w/opacity/see-through */
                 color: white;
@@ -52,34 +37,30 @@
                 border: 3px solid #f1f1f1;
                 position: absolute;
                 left: 50%;
-                transform: translate(-50%, -155%);
+                transform: translate(-50%,50%);
                 z-index: 2;
                 width: 80%;
-                padding: 20px;
+                padding: 40px;
                 text-align: center;
             }
             .test {
-                height: 20em;
+                height: 25em;
             }
-            .bgcolor {
-                background-color: whitesmoke;
+            .font{
+                font-family:"Rubik";
             }
         </style>
-        <title>TODO supply a title</title>
+        <title>Wonder Fruit</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     </head>
-    <body class="image">
-        <div class="test">
-                
-                 <div class="bg-image"></div>
-                 <br><br>
-            <div class="bg-text">
-                <h1 style="font-size: 50px;">Thank you!</h1>
-                <br>
-                <a href="listitem"><button type="button" class="btn btn-primary">Go Home</button></a>
-            </div>
+    <body class="bg font">
+        <br><br>
+        <div class="bg-text">
+            <h1>Thank you!</h1>
+            <br>
+            <a href="listitem"><button type="button" class="btn btn-primary">Go Home</button></a>
         </div>
     </body>
 </html>
