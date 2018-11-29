@@ -12,11 +12,11 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>History</title>
         <style>
-        .bg{
+            .bg{
                 background-image: url("image/img9.jpg");
                 background-position: center;
-/*                background-repeat: repeat-x;
-*/                background-attachment: fixed;
+                /*                background-repeat: repeat-x;
+                */                background-attachment: fixed;
 
             }
             .image {
@@ -75,9 +75,9 @@
                 box-shadow: 0 30px 60px 0 rgba(0,0,0,0.3);
                 text-align: left;
             }
-            
+
             .card{
-               -webkit-border-radius: 10px 10px 10px 10px;
+                -webkit-border-radius: 10px 10px 10px 10px;
                 border-radius: 20px 20px 20px 20px;
                 background: #fff;
                 padding: 30px;
@@ -89,7 +89,7 @@
                 box-shadow: 0 30px 60px 0 rgba(0,0,0,0.3);
                 text-align: left;
             }
-            
+
             .test2 {
                 -webkit-border-radius: 10px 10px 10px 10px;
                 border-radius: 20px 20px 20px 20px;
@@ -103,9 +103,9 @@
                 box-shadow: 0 30px 60px 0 rgba(0,0,0,0.3);
                 text-align: left;
             }
-    </style>
+        </style>
     </head>
-   <body class="bgcolor">
+    <body class="bgcolor">
         <div class="test">
             <div class="bg-image"></div>
             <div class="bg-text">
@@ -117,16 +117,13 @@
         <%@include file="/include/Header.jsp"%>
         <h1>History</h1>
         <div class="bg">
-        
-        <c:forEach items="${pay}" var="p">
-            
-            <hr>
-            PaymentID: ${p.paymentid}<br>
-            OrderID: ${p.orderid.orderid}<br>
-            Paid Date: ${p.paydate}<br>
-            <hr>  
-        </c:forEach>
-        </div>
-                
+
+            <c:forEach items="${pay}" var="p" varStatus="i">
+                Payment No.: ${i.count}<br>
+                Detail: <a href="ViewDetail?orderid=${p.orderid.orderid}"h><button id="myBtn">View</button></a><br>
+                Paid Date: ${p.paydate}<br>
+                <hr>  
+            </c:forEach>
+
     </body>
 </html>

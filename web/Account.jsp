@@ -300,7 +300,7 @@
             <b>Address</b>  ${cus.address}<br><br>
             <b>Date of Birth</b>    <fmt:formatDate value="${cus.dob}" type="date"/><br><br>
 
-            <form action="History" method="get">
+            <form action="History" method="post">
                 <br><input type="submit" value="History"/>
             </form>
             <form action="EditProfile" method="get">

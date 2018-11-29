@@ -126,6 +126,10 @@
         <servlet-name>OrderDetailServlet</servlet-name>
         <servlet-class>servlet.OrderDetailServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ViewDetailServlet</servlet-name>
+        <servlet-class>servlet.ViewDetailServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
         <url-pattern>/Login</url-pattern>
@@ -205,6 +209,10 @@
     <servlet-mapping>
         <servlet-name>OrderDetailServlet</servlet-name>
         <url-pattern>/OrderDetail</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ViewDetailServlet</servlet-name>
+        <url-pattern>/ViewDetail</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>

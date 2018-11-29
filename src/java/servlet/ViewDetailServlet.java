@@ -7,10 +7,7 @@ package servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Date;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.annotation.Resource;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.PersistenceUnit;
@@ -20,22 +17,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.transaction.UserTransaction;
-import model.Cart;
 import model.Customer;
-import model.ItemsinCart;
 import model.Orderdetail;
 import model.Orders;
-import model.Payment;
 import model.controller.CustomerJpaController;
 import model.controller.OrderdetailJpaController;
 import model.controller.OrdersJpaController;
-import model.controller.PaymentJpaController;
 
 /**
  *
  * @author Computer
  */
-public class OrderDetailServlet extends HttpServlet {
+public class ViewDetailServlet extends HttpServlet {
 
     @PersistenceUnit(unitName = "WonderFruitWebAppPU")
     EntityManagerFactory emf;
@@ -53,37 +46,28 @@ public class OrderDetailServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException, Exception {
+            throws ServletException, IOException {
         HttpSession session = request.getSession(false);
         Customer cus = (Customer) session.getAttribute("cus");
         CustomerJpaController cusCtrl = new CustomerJpaController(utx, emf);
         Customer newcus = cusCtrl.findCustomer(cus.getUsername());
-
+        
         String orderidStr = request.getParameter("orderid");
+        System.out.println(orderidStr);
         if (orderidStr != null && orderidStr.trim().length() > 0) {
             int orderid = Integer.valueOf(orderidStr);
             OrdersJpaController orderCtrl = new OrdersJpaController(utx, emf);
             Orders order = orderCtrl.findOrders(orderid);
-            OrderdetailJpaController orderDeCtrl = new OrderdetailJpaController(utx, emf);
 
-            Cart cart = (Cart) session.getAttribute("cart");
-            List<ItemsinCart> itemlist = cart.getitemsInCart();
-            for (ItemsinCart item : itemlist) {
-                Orderdetail orderdetail = new Orderdetail();
-                orderdetail.setOrderid(order);
-                orderdetail.setProductid(item.getProduct());
-                orderdetail.setQuantity(item.getQuantity());
-                orderdetail.setTotalprice(item.getTotalPrice());
-                orderDeCtrl.create(orderdetail);
-            }
+            OrderdetailJpaController orderDeCtrl = new OrderdetailJpaController(utx, emf);      
+            List<Orderdetail> orderDeList = order.getOrderdetailList();
+            request.setAttribute("orderdelist", orderDeList);
+            request.setAttribute("orderid", orderid);
+            getServletContext().getRequestDispatcher("/ViewOrderDetailPage.jsp").forward(request, response);
         }
-
-        session.setAttribute("cus", newcus);
-        getServletContext().getRequestDispatcher("/CardInfo.jsp").forward(request, response);
-
     }
 
-// <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *
@@ -95,11 +79,7 @@ public class OrderDetailServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try {
-            processRequest(request, response);
-        } catch (Exception ex) {
-            Logger.getLogger(OrderDetailServlet.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        processRequest(request, response);
     }
 
     /**
@@ -113,11 +93,7 @@ public class OrderDetailServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try {
-            processRequest(request, response);
-        } catch (Exception ex) {
-            Logger.getLogger(OrderDetailServlet.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        processRequest(request, response);
     }
 
     /**

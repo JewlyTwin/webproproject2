@@ -20,9 +20,12 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.transaction.UserTransaction;
 import model.Customer;
+import model.Orderdetail;
 import model.Orders;
 import model.Payment;
 import model.controller.CustomerJpaController;
+import model.controller.OrderdetailJpaController;
+import model.controller.OrdersJpaController;
 
 /**
  *
@@ -54,6 +57,12 @@ public class HistoryServlet extends HttpServlet {
 
         List<Payment> paylist = newcus.getPaymentList();
         request.setAttribute("pay", paylist);
+        
+        OrderdetailJpaController orderDeCtrl = new OrderdetailJpaController(utx, emf);
+        
+        Orders order = new Orders();
+        List<Orderdetail> orderDelist = order.getOrderdetailList();
+        request.setAttribute("orderdetaillist", orderDelist);
 
         session.setAttribute("cus", newcus);
         getServletContext().getRequestDispatcher("/HistoryPage.jsp").forward(request, response);
@@ -74,6 +83,7 @@ public class HistoryServlet extends HttpServlet {
             throws ServletException, IOException {
         try {
             processRequest(request, response);
+            
         } catch (Exception ex) {
             Logger.getLogger(HistoryServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
