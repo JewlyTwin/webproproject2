@@ -7,6 +7,7 @@ package servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.Resource;
@@ -18,9 +19,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.transaction.UserTransaction;
+import model.Cart;
 import model.Customer;
+import model.ItemsinCart;
+import model.Orderdetail;
 import model.Orders;
 import model.controller.CustomerJpaController;
+import model.controller.OrderdetailJpaController;
 import model.controller.OrdersJpaController;
 
 /**
@@ -28,11 +33,13 @@ import model.controller.OrdersJpaController;
  * @author Computer
  */
 public class OrderServlet extends HttpServlet {
-@PersistenceUnit (unitName = "WonderFruitWebAppPU")
-EntityManagerFactory emf;
 
-@Resource
-UserTransaction utx;
+    @PersistenceUnit(unitName = "WonderFruitWebAppPU")
+    EntityManagerFactory emf;
+
+    @Resource
+    UserTransaction utx;
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -45,18 +52,28 @@ UserTransaction utx;
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, Exception {
         HttpSession session = request.getSession(false);
-        Customer cus = (Customer)session.getAttribute("cus");
+        Customer cus = (Customer) session.getAttribute("cus");
         CustomerJpaController cusCtrl = new CustomerJpaController(utx, emf);
         Customer newcus = cusCtrl.findCustomer(cus.getUsername());
         Orders order = new Orders();
         order.setUsername(newcus);
         OrdersJpaController orderCtrl = new OrdersJpaController(utx, emf);
         orderCtrl.create(order);
-        
-//        System.err.println(order.getOrderid());
-        session.setAttribute("orderid", order.getOrderid());
+
+        OrderdetailJpaController orderDeCtrl = new OrderdetailJpaController(utx, emf);
+        Cart cart = (Cart) session.getAttribute("cart");
+        List<ItemsinCart> itemlist = cart.getitemsInCart();
+        for (ItemsinCart item : itemlist) {
+            Orderdetail orderdetail = new Orderdetail();
+            orderdetail.setOrderid(order);
+            orderdetail.setProductid(item.getProduct());
+            orderdetail.setQuantity(item.getQuantity());
+            orderdetail.setTotalprice(item.getTotalPrice());
+            orderDeCtrl.create(orderdetail);
+        }
         session.setAttribute("cus", newcus);
-        getServletContext().getRequestDispatcher("/CardInfo.jsp").forward(request, response);
+        session.setAttribute("orderid", order.getOrderid());
+        getServletContext().getRequestDispatcher("/OrderDetail").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -71,11 +88,11 @@ UserTransaction utx;
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-    try {
-        processRequest(request, response);
-    } catch (Exception ex) {
-        Logger.getLogger(OrderServlet.class.getName()).log(Level.SEVERE, null, ex);
-    }
+        try {
+            processRequest(request, response);
+        } catch (Exception ex) {
+            Logger.getLogger(OrderServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -89,11 +106,11 @@ UserTransaction utx;
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-    try {
-        processRequest(request, response);
-    } catch (Exception ex) {
-        Logger.getLogger(OrderServlet.class.getName()).log(Level.SEVERE, null, ex);
-    }
+        try {
+            processRequest(request, response);
+        } catch (Exception ex) {
+            Logger.getLogger(OrderServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**

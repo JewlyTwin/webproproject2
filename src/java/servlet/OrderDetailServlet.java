@@ -59,36 +59,41 @@ public class OrderDetailServlet extends HttpServlet {
         CustomerJpaController cusCtrl = new CustomerJpaController(utx, emf);
         Customer newcus = cusCtrl.findCustomer(cus.getUsername());
 
-        int orderid = (int) session.getAttribute("orderid");
-        OrdersJpaController orderCtrl = new OrdersJpaController(utx, emf);
-        Orders order = orderCtrl.findOrders(orderid);
-        Cart cart = (Cart) session.getAttribute("cart");
-        OrderdetailJpaController orderDeCtrl = new OrderdetailJpaController(utx, emf);
-        List<ItemsinCart> itemlist = cart.getitemsInCart();
-        for (ItemsinCart newcart : itemlist) {
-            Orderdetail orderdetail = new Orderdetail();
-            orderdetail.setOrderid(order);
-            orderdetail.setProductid(newcart.getProduct());
-            orderdetail.setQuantity(newcart.getQuantity());
-            orderdetail.setTotalprice(newcart.getTotalPrice());
-            orderDeCtrl.create(orderdetail);
+        String orderidStr = request.getParameter("orderid");
+        if (orderidStr != null && orderidStr.trim().length() > 0) {
+            int orderid = Integer.valueOf(orderidStr);
+            OrdersJpaController orderCtrl = new OrdersJpaController(utx, emf);
+            Orders order = orderCtrl.findOrders(orderid);
+            OrderdetailJpaController orderDeCtrl = new OrderdetailJpaController(utx, emf);
+
+            Cart cart = (Cart) session.getAttribute("cart");
+            List<ItemsinCart> itemlist = cart.getitemsInCart();
+            for (ItemsinCart item : itemlist) {
+                Orderdetail orderdetail = new Orderdetail();
+                orderdetail.setOrderid(order);
+                orderdetail.setProductid(item.getProduct());
+                orderdetail.setQuantity(item.getQuantity());
+                orderdetail.setTotalprice(item.getTotalPrice());
+                orderDeCtrl.create(orderdetail);
+            }
         }
+
         session.setAttribute("cus", newcus);
-        getServletContext().getRequestDispatcher("/PaySuccess.jsp").forward(request, response);
-    
-}
+        getServletContext().getRequestDispatcher("/CardInfo.jsp").forward(request, response);
+
+    }
 
 // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-/**
- * Handles the HTTP <code>GET</code> method.
- *
- * @param request servlet request
- * @param response servlet response
- * @throws ServletException if a servlet-specific error occurs
- * @throws IOException if an I/O error occurs
- */
-@Override
-        protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    /**
+     * Handles the HTTP <code>GET</code> method.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
             processRequest(request, response);
@@ -106,7 +111,7 @@ public class OrderDetailServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-        protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
             processRequest(request, response);
@@ -121,7 +126,7 @@ public class OrderDetailServlet extends HttpServlet {
      * @return a String containing servlet description
      */
     @Override
-        public String getServletInfo() {
+    public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
 
