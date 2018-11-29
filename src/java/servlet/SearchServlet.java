@@ -43,11 +43,36 @@ public class SearchServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
-        String search = request.getParameter("search");
+        String nameproduct = request.getParameter("nameproduct");
+        String type = request.getParameter("type");
         ProductJpaController jpa = new ProductJpaController(utx, emf);
-        List<Product> result = jpa.findProductname(search);
-        session.setAttribute("products", result);
-        response.sendRedirect("ProductList.jsp");
+        if(type != null){
+            if(type.equals("Dried")){
+                List<Product> result = jpa.findByProductnametype(nameproduct, type);
+                session.setAttribute("products", result);
+                response.sendRedirect("ProductList.jsp");
+                return;
+            }
+            if(type.equals("Jam")){
+                List<Product> result = jpa.findByProductnametype(nameproduct, type);
+                session.setAttribute("products", result);
+                response.sendRedirect("ProductList.jsp");
+                return;
+            }
+            if(type.equals("Pickled")){
+                List<Product> result = jpa.findByProductnametype(nameproduct, type);
+                session.setAttribute("products", result);
+                response.sendRedirect("ProductList.jsp");
+                return;
+            }
+            return;
+        }
+        if(nameproduct != null){
+            List<Product> result = jpa.findProductname(nameproduct);
+            session.setAttribute("products", result);
+            response.sendRedirect("ProductList.jsp");
+            return;
+        }
 
     }
 

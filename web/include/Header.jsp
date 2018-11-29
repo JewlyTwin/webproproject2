@@ -91,7 +91,6 @@
         <nav class="shift">
             <ul>
                 <li><a href="listitem">Home</a></li>
-                <li><a href="Favorite">Favorite</a></li>
                 <li><a href="#">About us</a></li>
                 <li>
                     <c:if test="${cart!=null}">
@@ -100,23 +99,14 @@
                 </li>
                 <c:choose>
                         <c:when test="${cus != null}">
-                            <li>
-                                <a href="Account">${cus.username}</a> 
-                            </li>
-                            <li>
-                                <a href="Logout">Logout</a>
-                            </li>
+                            <li><a href="Favorite">Favorite</a></li>
+                            <li><a href="Account">${cus.username}</a></li>
+                            <li><a href="Logout">Logout</a></li>
                         </c:when>
                         <c:otherwise>
-                            <li>
-                                <a href="Login">Guest</a>
-                            </li>
-                            <li>
-                                <a class="nav-link" href="Login">Login</a>
-                            </li>
-                            <li>
-                                <a class="nav-link" href="Register">Register</a>
-                            </li>
+<!--                            <li><a href="Login">Guest</a></li>-->
+                            <li><a class="nav-link" href="Login">Login</a></li>
+                            <li><a class="nav-link" href="Register">Register</a></li>
                         </c:otherwise>
                     </c:choose>
             </ul>

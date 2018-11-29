@@ -83,15 +83,28 @@
 
         <%@include file="/include/Header.jsp"%>
         <div class="bgcolor">
-            <form class="form-inline my-2 my-lg-0" style="text-align: right;" action="Search" method="post">
-                <span class="search">
-                    <input class="form-control mr-sm-2" type="text" name="search" placeholder="Search">
-                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>            
-                </span>
-            </form>
-
             <div class="container">
-                <div class="col-12 ">
+                <div class="col-12">
+                    <form class="form-inline mt-3 mb-1" action="Search" method="post">
+                        <div class="col-2 text-center">
+                            <input class="form-check-input" type="radio" name="type" value="Dried">
+                            Dried fruit
+                        </div>
+                        <div class="col-2 text-center">
+                            <input class="form-check-input" type="radio" name="type" value="Jam">
+                            Jam fruit
+                        </div>
+                        <div class="col-2 text-center">
+                            <input class="form-check-input" type="radio" name="type" value="Pickled">
+                            Pickled fruit
+                        </div>
+                        <div class="col-6 text-center">
+                            <span class="">
+                                <input class="form-control mr-sm-2" type="text" name="nameproduct" placeholder="Search">
+                                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>            
+                            </span>
+                        </div>
+                    </form>
                     <div class="row">
                         <c:forEach items="${products}" var="p" varStatus="i">
                             <div class="col-4">
