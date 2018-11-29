@@ -117,9 +117,7 @@
                                         </div>
                                         <div class="card-body">
                                             <a href="AddItemToCart?productid=${p.productid}" class="card-link">Add to cart</a>
-                    <c:if test="${sessionscope.cus == null}">
-                        <a href="AddFav?productid=${p.productid}" class="card-link" >Favorite</a>
-                    </c:if>
+                                            <a href="AddFav?productid=${p.productid}" class="card-link" >Favorite</a>
                                             <a href="ProductDetail?productid=${p.productid}" class="card-link">Detail</a>
                                         </div>
                                     </div>
