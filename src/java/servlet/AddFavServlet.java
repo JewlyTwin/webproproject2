@@ -49,28 +49,36 @@ public class AddFavServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, Exception {
         HttpSession session = request.getSession(false);
-   
+
         String productidStr = request.getParameter("productid");
 
         if (productidStr != null && productidStr.trim().length() > 0) {
             int productid = Integer.valueOf(productidStr);
-            
+
             Customer cus = (Customer) session.getAttribute("cus");
-    
+
             CustomerJpaController cusCtrl = new CustomerJpaController(utx, emf);
             Customer newcus = cusCtrl.findCustomer(cus.getUsername());
-           
+
+            FavoriteJpaController facCtrl = new FavoriteJpaController(utx, emf);
+            List<Favorite> favlist = newcus.getFavoriteList();
+            for (Favorite fav : favlist) {
+                if (productid == fav.getProductid().getProductid()) {
+                    request.setAttribute("wrong", "You have already favorite!!!");
+                    getServletContext().getRequestDispatcher("/listitem").forward(request, response);
+                    return;
+                }
+            }
+
             Product product = new Product(productid);
-          
-          
+
             Favorite fav = new Favorite();
             fav.setUsername(newcus);
             fav.setProductid(product);
-       
 
             FavoriteJpaController favCtrl = new FavoriteJpaController(utx, emf);
             favCtrl.create(fav);
-       
+
             session.setAttribute("cus", newcus);
 //            request.setAttribute("favcom", "favorite complete");
             getServletContext().getRequestDispatcher("/listitem").forward(request, response);

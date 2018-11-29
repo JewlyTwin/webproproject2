@@ -110,6 +110,10 @@
         <servlet-name>PlusAndMinusServlet</servlet-name>
         <servlet-class>servlet.PlusAndMinusServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>OrderDetailServlet</servlet-name>
+        <servlet-class>servlet.OrderDetailServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
         <url-pattern>/Login</url-pattern>
@@ -185,6 +189,10 @@
     <servlet-mapping>
         <servlet-name>PlusAndMinusServlet</servlet-name>
         <url-pattern>/PlusAndMinus</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>OrderDetailServlet</servlet-name>
+        <url-pattern>/OrderDetail</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>

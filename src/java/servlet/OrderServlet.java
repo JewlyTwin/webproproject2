@@ -53,6 +53,8 @@ UserTransaction utx;
         OrdersJpaController orderCtrl = new OrdersJpaController(utx, emf);
         orderCtrl.create(order);
         
+//        System.err.println(order.getOrderid());
+        session.setAttribute("orderid", order.getOrderid());
         session.setAttribute("cus", newcus);
         getServletContext().getRequestDispatcher("/CardInfo.jsp").forward(request, response);
     }

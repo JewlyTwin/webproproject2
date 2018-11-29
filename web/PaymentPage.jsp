@@ -317,7 +317,9 @@
                 <div class="row my-3 align-items-center">
                     <h1>Total Price :: ${cart.totalPrice}</h1>
                     <div class="ml-auto">
+                        <form action="Payment" method="post">
                 <input onclick="alert('msg')" type="submit" value="confrim">
+                        </form>
                     </div>
                 </div>
             </div>

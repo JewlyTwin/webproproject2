@@ -287,6 +287,7 @@
                 </div>
         
         <form action="Payment" method="get">
+            <!--<input type="hidden" value="${orderid}">-->
             Card ID <br><input type="text" name="cardid" required><br>
             Card Owner <br><input type="text" name="owner" required><br>
             EXP. Date <br><input type="date" name="exp" required><br>
