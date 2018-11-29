@@ -67,6 +67,9 @@ public class PaymentServlet extends HttpServlet {
         PaymentJpaController payCtrl = new PaymentJpaController(utx, emf);
         payCtrl.create(pay);
 
+        if (session.getAttribute("cart") != null) {
+            session.removeAttribute("cart");
+        }
         session.setAttribute("cus", newcus);
         getServletContext().getRequestDispatcher("/PaySuccess.jsp").forward(request, response);
     }
