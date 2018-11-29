@@ -10,7 +10,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Wonder Fruit</title>
         <a href="ProductList.jsp"></a>
         <style>
             .bg{
@@ -53,7 +53,7 @@
             .bgcolor {
                 background-color: whitesmoke;
             }
-            .wrapper {
+/*            .wrapper {
                 display: flex;
                 align-items: center;
                 flex-direction: column; 
@@ -61,7 +61,7 @@
                 width: 100%;
                 min-height: 100%;
                 padding: 20px;
-            }
+            }*/
 
             #formContent {
                 -webkit-border-radius: 20px 20px 20px 20px;
@@ -238,34 +238,30 @@
         ${unfavcom}
         <div class="bg">
         <div class="container ">
-            
-            <div class="wrapper fadeIn">
+            <div class="fadeIn">
                 <div class="formContent">
-        
                     <div class="col-12 ">
-                <div class="row">
-        <c:forEach items="${fav}" var="f" >
-                        <div class="col-4">
-                            <div class="col-12 my-3">
-                                <div class="card" style="width: 290px;">
-                                    <img class="image" src="image/${f.productid.producttype}/${f.productid.productname}.jpg" alt="${f.productid.productname}" height="200em;">
-                                    <div class="card-body">
-                                        <h5 class="card-title"><a href="ProductDetail?productid=${f.productid.productid}"><p>${f.productid.productname}</p></a></h5>
-                                        <p class="card-text">${f.productid.detail}</p>
-                                    </div>
-                                    <div class="card-body">
-                                        <a href="AddItemToCart?productid=${f.productid.productid}}" class="card-link">Add to cart</a>
-                                        <a href="EditFav?favid=${f.favid}" class="card-link" >Unfavorite</a>
-                                        <a href="ProductDetail?productid=${f.productid.productid}" class="card-link">Detail</a><br>
-                                
+                        <div class="row">
+                            <c:forEach items="${fav}" var="f" >
+                                <div class="col-4">
+                                    <div class="col-12 my-3">
+                                        <div class="card" style="width: 290px;">
+                                            <img class="image" src="image/${f.productid.producttype}/${f.productid.productname}.jpg" alt="${f.productid.productname}" height="200em;">
+                                            <div class="card-body">
+                                                <h5 class="card-title"><a href="ProductDetail?productid=${f.productid.productid}"><p>${f.productid.productname}</p></a></h5>
+                                                <p class="card-text">${f.productid.detail}</p>
+                                            </div>
+                                            <div class="card-body">
+                                                <a href="AddItemToCart?productid=${f.productid.productid}}" class="card-link">Add to cart</a>
+                                                <a href="EditFav?favid=${f.favid}" class="card-link" >Unfavorite</a>
+                                                <a href="ProductDetail?productid=${f.productid.productid}" class="card-link">Detail</a><br>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+                            </c:forEach>    
                         </div>
-        </c:forEach>
-                </div>
                     </div>
-                        
                 </div>
            </div>
         </div>
