@@ -72,7 +72,7 @@
             
         </style>
     </head>
-    <body class="bgcolor">
+    <body class="bgcolor font">
         <div class="test">
             <div class="bg-image"></div>
             <div class="bg-text">
@@ -117,7 +117,9 @@
                                         </div>
                                         <div class="card-body">
                                             <a href="AddItemToCart?productid=${p.productid}" class="card-link">Add to cart</a>
-                                            <a href="AddFav?productid=${p.productid}" class="card-link" >Favorite</a>
+                    <c:if test="${sessionscope.cus == null}">
+                        <a href="AddFav?productid=${p.productid}" class="card-link" >Favorite</a>
+                    </c:if>
                                             <a href="ProductDetail?productid=${p.productid}" class="card-link">Detail</a>
                                         </div>
                                     </div>

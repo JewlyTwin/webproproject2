@@ -224,7 +224,7 @@
     <body class="bgcolor">
         <div class="test">
             <div class="bg-image"></div>
-            <div class="bg-text">
+            <div class="bg-text ">
                 <h1 style="font-size:50px">Wonder Fruit</h1>
                 <h3>Shopping Fruit Online</h3>
             </div>
@@ -232,12 +232,8 @@
        
         
         <%@include file="/include/Header.jsp"%> 
-        <form class="form-inline my-2 my-lg-0" style="text-align: right;" action="Search" method="post">
-            <h1>Product Detail <span class="search"><input class="form-control mr-sm-2  " type="text" name="search" placeholder="Search">
-                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button></span></h1>
-            
-                
-            </form>
+        
+        <div class="text-center"><h1>Product Detail</h1></div>
         <div class="bg">
         <div class="container ">
             

@@ -233,11 +233,11 @@
         </div>
 
         <%@include file="/include/Header.jsp"%>
-            <h1>Favorite</h1>
+        <h1 class="text-center">Favorite</h1>
         
         ${unfavcom}
         <div class="bg">
-        <div class="container ">
+        <div class="container">
             <div class="fadeIn">
                 <div class="formContent">
                     <div class="col-12 ">

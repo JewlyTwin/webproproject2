@@ -11,6 +11,7 @@
     <head>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link href="https://fonts.googleapis.com/css?family=Rubik" rel="stylesheet">
         <title>JSP Page</title>
         <style>
           small {
@@ -85,29 +86,32 @@
             visibility: visible;
             height: 80%;
           }
+          .font{
+                font-family: 'Rubik', sans-serif;
+          }
         </style>
     </head>
-    <body>
+    <body class="font">
         <nav class="shift">
             <ul>
                 <li><a href="listitem">Home</a></li>
-                <li><a href="#">About us</a></li>
+                <!--<li><a href="#">About us</a></li>-->
                 <li>
                     <c:if test="${cart!=null}">
                         <a href="CheckCart">Your Cart:(${cart.totalQuantity})</a>
                     </c:if>
                 </li>
                 <c:choose>
-                        <c:when test="${cus != null}">
-                            <li><a href="Favorite">Favorite</a></li>
-                            <li><a href="Account">${cus.username}</a></li>
-                            <li><a href="Logout">Logout</a></li>
-                        </c:when>
-                        <c:otherwise>
-                            <li><a class="nav-link" href="Login">Login</a></li>
-                            <li><a class="nav-link" href="Register">Register</a></li>
-                        </c:otherwise>
-                    </c:choose>
+                    <c:when test="${cus != null}">
+                        <li><a href="Favorite">Favorite</a></li>
+                        <li><a href="Account">${cus.username}</a></li>
+                        <li><a href="Logout">Logout</a></li>
+                    </c:when>
+                    <c:otherwise>
+                        <li><a class="nav-link" href="Login">Login</a></li>
+                        <li><a class="nav-link" href="Register">Register</a></li>
+                    </c:otherwise>
+                </c:choose>
             </ul>
         </nav>
 

@@ -34,6 +34,12 @@
         <dispatcher>REQUEST</dispatcher>
         <dispatcher>FORWARD</dispatcher>
     </filter-mapping>
+    <filter-mapping>
+        <filter-name>CheckLogin</filter-name>
+        <servlet-name>FavoriteServlet</servlet-name>
+        <dispatcher>REQUEST</dispatcher>
+        <dispatcher>FORWARD</dispatcher>
+    </filter-mapping>
     <servlet>
         <servlet-name>LoginServlet</servlet-name>
         <servlet-class>servlet.LoginServlet</servlet-class>
