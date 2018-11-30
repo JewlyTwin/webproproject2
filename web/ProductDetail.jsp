@@ -251,7 +251,7 @@
                             <b>Detail</b><p class="card-text">${pro.detail}</p>
                         </div>
                         <div class="card-body">
-                            <a href="AddItemToCart?productid=${pro.productid}}" class="card-link">Add to cart</a>
+                            <a href="AddItemToCart?productid=${pro.productid}" class="card-link">Add to cart</a>
                             <a href="Favorite?productid=${pro.productid}" class="card-link" >Favorite</a>
                         </div>
                     </div>

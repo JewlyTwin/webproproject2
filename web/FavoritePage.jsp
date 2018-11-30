@@ -252,7 +252,7 @@
                                                 <p class="card-text">${f.productid.detail}</p>
                                             </div>
                                             <div class="card-body">
-                                                <a href="AddItemToCart?productid=${f.productid.productid}}" class="card-link">Add to cart</a>
+                                                <a href="AddItemToCart?productid=${f.productid.productid}" class="card-link">Add to cart</a>
                                                 <a href="EditFav?favid=${f.favid}" class="card-link" >Unfavorite</a>
                                                 <a href="ProductDetail?productid=${f.productid.productid}" class="card-link">Detail</a><br>
                                             </div>
