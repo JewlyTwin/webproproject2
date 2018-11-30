@@ -11,6 +11,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>History</title>
+        <link href="https://fonts.googleapis.com/css?family=Rubik" rel="stylesheet">
         <style>
             .bg{
                 background-image: url("image/img9.jpg");
@@ -51,6 +52,7 @@
             }
             .bgcolor {
                 background-color: whitesmoke;
+               
             }
             .wrapper {
                 display: flex;
@@ -103,9 +105,12 @@
                 box-shadow: 0 30px 60px 0 rgba(0,0,0,0.3);
                 text-align: left;
             }
+             .font{
+                font-family:"Rubik";
+            }
         </style>
     </head>
-    <body class="bgcolor">
+    <body class="bgcolor font">
         <div class="test">
             <div class="bg-image"></div>
             <div class="bg-text">
@@ -120,7 +125,7 @@
 
             <c:forEach items="${pay}" var="p" varStatus="i">
                 Payment No.: ${i.count}<br>
-                Detail: <a href="ViewDetail?orderid=${p.orderid.orderid}"h><button id="myBtn">View</button></a><br>
+                Detail: <a href="ViewDetail?orderid=${p.orderid.orderid}"h><button id="myBtn" class="mx-3 btn btn-primary">View</button></a><br>
                 Paid Date: ${p.paydate}<br>
                 <hr>  
             </c:forEach>
